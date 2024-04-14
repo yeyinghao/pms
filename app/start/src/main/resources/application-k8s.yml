@@ -1,0 +1,102 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://db-mysql8:3306/webapp?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&verifyServerCertificate=false&useSSL=false
+    username: root
+    password: root
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      # 设置是否自动提交事务，默认为true
+      auto-commit: true
+      # 设置用于测试连接的SQL查询语句
+      connection-test-query: SELECT 1
+      # 设置获取数据库连接的超时时间，默认为30秒，单位是秒
+      connection-timeout: 30000
+      # 设置连接在连接池中保持空闲的最长时间，默认为10分钟，单位是秒
+      idle-timeout: 30000
+      # 设置连接在连接池中允许存在的最长时间，默认为30分钟，单位是秒
+      max-lifetime: 1800000
+      # 设置连接池中允许的最大连接数，默认为10
+      maximum-pool-size: 15
+      # 设置连接池中保持的最小空闲连接数，默认为10
+      minimum-idle: 5
+      # 设置连接池的名称，默认为"HikariPool-1"
+      pool-name: HikariPool-mysql8
+      # 设置连接验证的超时时间，默认为5秒，单位是秒
+      validation-timeout: 10000
+  redis:
+    redisson:
+      config: |
+        singleServerConfig:
+          password: 123456
+          address: "redis://db-redis:6379"
+          database: 1
+          timeout: 60000
+        threads: 0
+        nettyThreads: 0
+        codec: !<org.redisson.codec.JsonJacksonCodec> {}
+        transportMode: "NIO"
+        useScriptCache: true
+
+#数据库加解密
+kq:
+  encrypt:
+    secret: qwer1234asdf5678
+
+#minio配置
+minio:
+  endPoint: http://minio-api.frp.lumanyy.com
+#  port: 9000
+  accessKey: root
+  secretKey: password
+  secure: false
+  bucketName: webapp # 桶名 我这是给出了一个默认桶名
+  imageSize: 104857600 # 我在这里设定了 图片文件的最大大小 100MB=10*1024*1024
+  fileSize: 1073741824 # 此处是设定了文件的最大大小 1G=1024*1024*1024
+  isHttp: true
+  expirySecond: 3600
+
+#xxl-job
+xxl:
+  job:
+    admin:
+      accessToken: ''
+      address: http://monitor-xxl-job:8080
+    executor:
+      address: ''
+      appname: xxl-job-executor-myboot
+      ip: ''
+      logpath: ./logs/xxl-job
+      logretentiondays: 30
+      port: 18888
+
+# 加密
+jasypt:
+  encryptor:
+    password: jasypt
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+dubbo:
+  application:
+    name: provider-service
+  registry:
+    address: nacos://cloud-nacos:8848
+    username: nacos
+    password: nacos
+    enable-empty-protection: false
+  scan:
+    base-packages: com.luman.seckill.impl
+  protocol:
+    name: dubbo
+    port: 15511
+
+#开发环境配置
+nacos:
+  config:
+    server-addr: cloud-nacos:8848
+
+sa-token:
+  token-name: Authorization
+  token-prefix: Bearer
+  jwt-secret-key: 'd0!doc15415B0*4G0`'

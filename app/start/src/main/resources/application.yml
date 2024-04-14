@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: myboot
+  profiles:
+    active: local
+  mvc:
+    # 出现错误时, 直接抛出异常
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      # 不主动映射静态页面
+      add-mappings: false
+  main:
+    allow-bean-definition-overriding: true
+
+# 汇裁测试数据接入
+huicai:
+  appId: 202402202413598
+  aesKey: 7PYNnaxRlSlDjlQJsC5cVw==
+  signPrivateKey: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJzMKmmbjwl1WV85OYZ8KST9xTRj5U8DQ2TwvgIhtqgXvNJD8jreSZIwCks8JvLt5E0oF4iF0h8SWtd3+hTaYeoeeCGSKwK+hKBeE/NbrAcgLwMz3mJM6c9kZA0R/JX316AYGwiqfoNRaqQa7IMhUnm0xE+BTTB59wDc9IbdhCyFAgMBAAECgYBdvZ35p1u7juHQkTi4E1DR4bndmX+FXnETTu55/cfi9NYZay/NTAn2ESyGUD8E636bNkXjhAXcN7ABs6PahbkVPGmE0IBfu7wUOMecu7JYTkf13XbboYyXxECKy+x8ZxZ0ukH9GK9nsttoYcbOJso9xU0PB9pLudurqypuSoppvQJBAMwzLbV1sQAYo2q/3gFTQ+UkdeQz9cfCJF24R1fH0ttmzmj81GmxKcZoptUpq39LaNdgAvFuDpPj7u+5whoKndcCQQDEkqhHfRTf2z0xCNf1onGsAi5nwEQFZ7DFL/uqzdwKTclB4a+Zlh4DFA2+MnCSXRKodnejyNDW8+aEbwJ9BeUDAkEAyZEraZgHZITtqw5CYySCPMrE5MK1tr3Zj/m70taZOaI91jzcoIgVKJldNcWwWDNkBlXsEc4F7c5tqY3AIFyieQJADo/qxXj/reG488P686h4EU0MEQWORHQ9BS6bzzh235CJo0bL0m3rhUDcD8X+zuj0M+Sq0khTKEljP1ZV8dsY7wJAYMsxIqfUjImidjWqELHIY2Ud/EqNz8UeRuqXuKn6fxBfuyjo4HZdW3Srz+RYgBjqit3nZ3m1Ib72tkesX/FqQw==
+  checkSignPublicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCczCppm48JdVlfOTmGfCkk/cU0Y+VPA0Nk8L4CIbaoF7zSQ/I63kmSMApLPCby7eRNKBeIhdIfElrXd/oU2mHqHnghkisCvoSgXhPzW6wHIC8DM95iTOnPZGQNEfyV99egGBsIqn6DUWqkGuyDIVJ5tMRPgU0wefcA3PSG3YQshQIDAQAB
+  clientId: 202402202413598
+  clientSecret: QPO7mITtXdV5+0CZvUnqGmh7srAt2SCUS/JiSXBDgF8=
+  serviceUrl: https://openapisdp-dev.arbitration.net.cn/test-gateway
+  caseStatusCallback: http://webapp-api.frp.lumanyy.com/api/seckill/arbitration/callback/caseStatus
+  signInfoCallback: http://webapp-api.frp.lumanyy.com/api/seckill/arbitration/callback/signInfo
+
+smy:
+  cache:
+    projectKeyPrefix: seckill
+    cacheKeyPrefix: cache
+    ttlMillSecond:  1440000
+    maxIdleTimeMillSecond:  720000
+    defaultExpiredSecond: 300
+
