@@ -1,6 +1,6 @@
 spring:
   application:
-    name: myboot
+    name: pms
   profiles:
     active: local
   mvc:
@@ -27,7 +27,7 @@ huicai:
 
 smy:
   cache:
-    projectKeyPrefix: seckill
+    projectKeyPrefix: pms
     cacheKeyPrefix: cache
     ttlMillSecond:  1440000
     maxIdleTimeMillSecond:  720000
