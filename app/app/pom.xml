@@ -8,13 +8,18 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>pms-domain</artifactId>
+    <artifactId>app</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>com.luman.pms</groupId>
-            <artifactId>pms-client</artifactId>
+            <artifactId>infrastructure</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.luman.smy</groupId>
+            <artifactId>smy-task</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.luman.pms</groupId>
-            <artifactId>pms-adapter</artifactId>
+            <artifactId>adapter</artifactId>
         </dependency>
 
         <dependency>

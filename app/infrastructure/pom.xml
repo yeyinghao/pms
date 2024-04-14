@@ -8,18 +8,39 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>pms-adapter</artifactId>
+    <artifactId>infrastructure</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>com.luman.pms</groupId>
-            <artifactId>pms-app</artifactId>
+            <artifactId>domain</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.luman.smy</groupId>
-            <artifactId>smy-web</artifactId>
+            <artifactId>smy-dal</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.luman.smy</groupId>
+            <artifactId>smy-file</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.luman.smy</groupId>
+            <artifactId>smy-cache</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.luman.smy</groupId>
+            <artifactId>smy-token</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.luman.smy</groupId>
+            <artifactId>smy-config</artifactId>
+        </dependency>
+
     </dependencies>
 </project>

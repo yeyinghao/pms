@@ -8,14 +8,18 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>pms-client</artifactId>
+    <artifactId>adapter</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
-            <groupId>com.luman.smy</groupId>
-            <artifactId>smy-common</artifactId>
+            <groupId>com.luman.pms</groupId>
+            <artifactId>app</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.luman.smy</groupId>
+            <artifactId>smy-web</artifactId>
+        </dependency>
     </dependencies>
 </project>

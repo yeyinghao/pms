@@ -23,27 +23,27 @@
             <!--Project modules-->
             <dependency>
                 <groupId>com.luman.pms</groupId>
-                <artifactId>pms-adapter</artifactId>
+                <artifactId>adapter</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.luman.pms</groupId>
-                <artifactId>pms-client</artifactId>
+                <artifactId>client</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.luman.pms</groupId>
-                <artifactId>pms-app</artifactId>
+                <artifactId>app</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.luman.pms</groupId>
-                <artifactId>pms-domain</artifactId>
+                <artifactId>domain</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.luman.pms</groupId>
-                <artifactId>pms-infrastructure</artifactId>
+                <artifactId>infrastructure</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <!--Project modules End-->
@@ -85,11 +85,11 @@
             <email>yeyinghaog@gmail.com</email>
         </developer>
     </developers>
-<modules>  <module>app/pms-client</module>
-    <module>app/pms-adapter</module>
-    <module>app/pms-app</module>
-    <module>app/pms-domain</module>
-    <module>app/pms-infrastructure</module>
+<modules>  <module>app/client</module>
+    <module>app/adapter</module>
+    <module>app/app</module>
+    <module>app/domain</module>
+    <module>app/infrastructure</module>
     <module>app/start</module>
   </modules>
 </project>
