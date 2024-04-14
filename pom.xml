@@ -33,7 +33,7 @@
             </dependency>
             <dependency>
                 <groupId>com.luman.pms</groupId>
-                <artifactId>app</artifactId>
+                <artifactId>application</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -87,7 +87,7 @@
     </developers>
 <modules>  <module>app/client</module>
     <module>app/adapter</module>
-    <module>app/app</module>
+    <module>app/application</module>
     <module>app/domain</module>
     <module>app/infrastructure</module>
     <module>app/start</module>
