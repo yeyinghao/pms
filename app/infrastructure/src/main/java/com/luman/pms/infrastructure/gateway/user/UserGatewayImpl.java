@@ -3,7 +3,7 @@ package com.luman.pms.infrastructure.gateway.user;
 import com.luman.pms.client.dto.user.UserDTO;
 import com.luman.pms.domain.dp.User;
 import com.luman.pms.domain.user.gateway.UserGateway;
-import com.luman.pms.infrastructure.db.service.UserDataService;
+import com.luman.pms.infrastructure.user.UserDataService;
 import com.luman.smy.common.util.CopyUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
