@@ -58,11 +58,6 @@ public class PmsRoleQryExec {
 	private final PmsPermissionDataService pmsPermissionDataService;
 
 	/**
-	 * Pms角色qry执行
-	 */
-	private final PmsRoleQryExec pmsRoleQryExec;
-
-	/**
 	 * 获取角色信息由用户id
 	 *
 	 * @param userId 用户id

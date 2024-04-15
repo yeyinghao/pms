@@ -2,6 +2,7 @@ package com.luman.pms.infrastructure.user;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.luman.pms.domain.dp.User;
+import com.luman.pms.infrastructure.user.mapper.UserMapper;
 import com.luman.smy.common.util.CopyUtil;
 import org.springframework.stereotype.Service;
 

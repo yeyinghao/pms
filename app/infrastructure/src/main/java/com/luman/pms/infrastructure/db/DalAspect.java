@@ -35,7 +35,7 @@ public class DalAspect {
 	 * @return {@link Object}
 	 */
 	@SneakyThrows
-	@Around("execution(* com.luman.pms.infrastructure.gateway..*GatewayImpl.*(..))")
+	@Around("execution(* com.luman.pms.infrastructure.pms.service..*Service.*(..))")
 	public Object around(ProceedingJoinPoint joinPoint) {
 		long startTime = System.currentTimeMillis();
 		String res = CommConstant.N;

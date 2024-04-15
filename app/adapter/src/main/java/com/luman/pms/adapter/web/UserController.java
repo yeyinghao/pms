@@ -1,5 +1,6 @@
 package com.luman.pms.adapter.web;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.luman.pms.adapter.enums.UserEnum;
 import com.luman.pms.client.api.UserManager;
 import com.luman.pms.client.dto.user.UserDTO;
@@ -20,6 +21,7 @@ public class UserController {
 	private final WebTemplate webTemplate;
 
 	@RequestMapping("/getUsers")
+	@SaIgnore
 	public ResultHelper<List<UserDTO>> getUsers() {
 		return webTemplate.execute(UserEnum.GET_USERS, userService::getUsers);
 	}

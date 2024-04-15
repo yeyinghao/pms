@@ -19,7 +19,10 @@ import org.springframework.core.env.Environment;
 @Slf4j
 @SpringBootApplication(scanBasePackages = {"com.luman.pms", "com.luman.smy"})
 @ServletComponentScan(basePackages = "com.luman.smy.common.web.filter")
-@MapperScan(basePackages = "com.luman.pms.infrastructure.db.mapper")
+@MapperScan(basePackages = {
+		"com.luman.pms.infrastructure.pms.mapper",
+		"com.luman.pms.infrastructure.user.mapper"
+})
 @NacosPropertySource(dataId = "pms.yml", autoRefreshed = true)
 public class Application {
 

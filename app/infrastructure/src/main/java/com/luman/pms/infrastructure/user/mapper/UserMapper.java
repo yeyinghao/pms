@@ -1,6 +1,7 @@
-package com.luman.pms.infrastructure.user;
+package com.luman.pms.infrastructure.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.luman.pms.infrastructure.user.UserPO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
