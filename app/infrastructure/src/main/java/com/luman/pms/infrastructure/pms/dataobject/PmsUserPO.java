@@ -1,6 +1,7 @@
 package com.luman.pms.infrastructure.pms.dataobject;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.kqinfo.universal.mybatis.annotation.FieldEncrypt;
 import com.luman.smy.dal.model.BasePO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,6 +30,7 @@ public class PmsUserPO extends BasePO {
 	/**
 	 * 密码
 	 */
+	@FieldEncrypt
 	private String password;
 
 	/**

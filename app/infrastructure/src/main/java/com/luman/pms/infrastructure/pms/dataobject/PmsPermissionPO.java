@@ -1,5 +1,6 @@
 package com.luman.pms.infrastructure.pms.dataobject;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.luman.smy.dal.model.BasePO;
 import lombok.Data;
@@ -79,6 +80,7 @@ public class PmsPermissionPO extends BasePO {
 	/**
 	 * 是否展示在页面菜单
 	 */
+	@TableField("`show`")
 	private Boolean show;
 
 	/**
@@ -89,6 +91,7 @@ public class PmsPermissionPO extends BasePO {
 	/**
 	 * 排序
 	 */
+	@TableField("`order`")
 	private Integer order;
 
 }
