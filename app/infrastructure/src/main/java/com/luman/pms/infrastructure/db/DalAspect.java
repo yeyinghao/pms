@@ -42,7 +42,7 @@ public class DalAspect {
 		String className = null;
 		String methodName = null;
 		try {
-			className = joinPoint.getSignature().getDeclaringType().getSimpleName();
+			className = joinPoint.getTarget().getClass().getSimpleName();
 			methodName = joinPoint.getSignature().getName();
 			Object proceed = joinPoint.proceed();
 			res = CommConstant.Y;

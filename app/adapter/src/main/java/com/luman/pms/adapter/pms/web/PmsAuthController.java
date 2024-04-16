@@ -6,7 +6,7 @@
 package com.luman.pms.adapter.pms.web;
 
 import cn.dev33.satoken.annotation.SaIgnore;
-import com.luman.pms.adapter.enums.UserEnum;
+import com.luman.pms.adapter.pms.enums.PmsAuthEnum;
 import com.luman.pms.client.pms.api.PmsAuthManager;
 import com.luman.pms.client.pms.api.PmsUserManager;
 import com.luman.pms.client.pms.dto.req.ChangePasswordReq;
@@ -50,7 +50,7 @@ public class PmsAuthController {
 	@PostMapping("/login")
 	@SaIgnore
 	public ResultHelper<LoginTokenRes> login(@RequestBody LoginReq req) {
-		return webTemplate.execute(UserEnum.GET_USERS, () -> pmsAuthMapper.login(req));
+		return webTemplate.execute(PmsAuthEnum.LOGIN, () -> pmsAuthMapper.login(req));
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/register")
 	public ResultHelper<Boolean> register(@RequestBody RegisterUserReq req) {
-		return webTemplate.execute(UserEnum.GET_USERS, () -> pmsUserManager.register(req));
+		return webTemplate.execute(PmsAuthEnum.REGISTER, () -> pmsUserManager.register(req));
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class PmsAuthController {
 	 */
 	@GetMapping("/refresh/token")
 	public ResultHelper<LoginTokenRes> refreshToken() {
-		return webTemplate.execute(UserEnum.GET_USERS, () -> pmsAuthMapper.refreshToken());
+		return webTemplate.execute(PmsAuthEnum.REFRESH_TOKEN, () -> pmsAuthMapper.refreshToken());
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/current-role/switch/{roleCode}")
 	public ResultHelper<LoginTokenRes> switchRole(@PathVariable String roleCode) {
-		return webTemplate.execute(UserEnum.GET_USERS, () -> pmsAuthMapper.switchRole(roleCode));
+		return webTemplate.execute(PmsAuthEnum.SWITCH_ROLE, () -> pmsAuthMapper.switchRole(roleCode));
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/logout")
 	public ResultHelper<Boolean> logout() {
-		return webTemplate.execute(UserEnum.GET_USERS, () -> pmsAuthMapper.logout());
+		return webTemplate.execute(PmsAuthEnum.LOGOUT, () -> pmsAuthMapper.logout());
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class PmsAuthController {
 	@GetMapping("/captcha")
 	@SaIgnore
 	public ResultHelper<Boolean> captcha() {
-		return webTemplate.execute(UserEnum.GET_USERS, () -> pmsAuthMapper.captcha());
+		return webTemplate.execute(PmsAuthEnum.CAPTCHA, () -> pmsAuthMapper.captcha());
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/password")
 	public ResultHelper<Boolean> changePassword(@RequestBody ChangePasswordReq req) {
-		return webTemplate.execute(UserEnum.GET_USERS, () -> pmsAuthMapper.changePassword(req));
+		return webTemplate.execute(PmsAuthEnum.CHANGE_PASSWORD, () -> pmsAuthMapper.changePassword(req));
 	}
 
 }

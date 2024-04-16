@@ -64,6 +64,7 @@ public class PmsAuthTokenExec {
 //        if (StrUtil.isBlank(req.getCaptchaKey()) || !captchaService.verify(req.getCaptchaKey(), req.getCaptcha())) {
 //            throw new BizException(CommonErrorEnum.PROCESS_FAIL);
 //        }
+
 		Assert.isTrue(StrUtil.equals(req.getPassword(), pmsUser.getPassword()), CommErrorEnum.BIZ_ERROR, "密码不正确");
 
 		// 查询用户的角色
