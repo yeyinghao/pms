@@ -68,7 +68,7 @@ public class PmsAuthTokenExec {
 		Assert.isTrue(StrUtil.equals(req.getPassword(), pmsUser.getPassword()), CommErrorEnum.BIZ_ERROR, "密码不正确");
 
 		// 查询用户的角色
-		List<PmsRole> roles = pmsRoleQryExec.getPmsRolesByUserId(pmsUser.getId());
+		List<PmsRole> roles = pmsRoleQryExec.getPmsRolesByUserId(pmsUser.getUserId());
 		return generateToken(pmsUser, roles, roles.isEmpty() ? "" : roles.get(0).getCode());
 	}
 

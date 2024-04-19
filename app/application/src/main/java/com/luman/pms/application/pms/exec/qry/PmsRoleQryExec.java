@@ -4,18 +4,19 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.tree.Tree;
 import com.google.common.collect.Lists;
+import com.luman.pms.application.pms.convert.RoleConvert;
 import com.luman.pms.client.pms.model.info.PermissionInfo;
 import com.luman.pms.client.pms.model.info.RoleInfo;
 import com.luman.pms.client.pms.model.info.RolePageInfo;
 import com.luman.pms.client.pms.model.req.RolePageReq;
-import com.luman.pms.domain.pms.model.PmsPermission;
-import com.luman.pms.domain.pms.model.PmsRole;
-import com.luman.pms.domain.pms.model.PmsRolePermission;
-import com.luman.pms.domain.pms.model.PmsUserRole;
 import com.luman.pms.domain.pms.gateway.PmsPermissionGateway;
 import com.luman.pms.domain.pms.gateway.PmsRoleGateway;
 import com.luman.pms.domain.pms.gateway.PmsRolePermissionGateway;
 import com.luman.pms.domain.pms.gateway.PmsUserRoleGateway;
+import com.luman.pms.domain.pms.model.PmsPermission;
+import com.luman.pms.domain.pms.model.PmsRole;
+import com.luman.pms.domain.pms.model.PmsRolePermission;
+import com.luman.pms.domain.pms.model.PmsUserRole;
 import com.luman.pms.infrastructure.pms.util.PermissionUtil;
 import com.luman.smy.common.model.PageRes;
 import com.luman.smy.common.util.CopyUtil;
@@ -65,27 +66,7 @@ public class PmsRoleQryExec {
 	 */
 	public List<RoleInfo> getRoleInfosByUserId(Long userId) {
 		// 查询用户的角色
-		return getRoleInfos(getPmsRolesByUserId(userId));
-	}
-
-	/**
-	 * 获取角色信息
-	 *
-	 * @param pmsRoles Pms角色
-	 * @return {@link List}<{@link RoleInfo}>
-	 */
-	public static List<RoleInfo> getRoleInfos(List<PmsRole> pmsRoles) {
-		if (CollectionUtil.isEmpty(pmsRoles)) {
-			return Lists.newArrayList();
-		}
-		return pmsRoles.stream().map(item -> {
-			RoleInfo roleInfo = new RoleInfo();
-			roleInfo.setId(item.getId());
-			roleInfo.setCode(item.getCode());
-			roleInfo.setName(item.getName());
-			roleInfo.setEnable(item.getEnable());
-			return roleInfo;
-		}).collect(Collectors.toList());
+		return RoleConvert.buildRoleInfos(getPmsRolesByUserId(userId));
 	}
 
 	/**
@@ -113,7 +94,7 @@ public class PmsRoleQryExec {
 	 */
 	public List<RoleInfo> findAll() {
 		List<PmsRole> pmsRoles = pmsRoleDataService.findAll();
-		return PmsRoleQryExec.getRoleInfos(pmsRoles);
+		return RoleConvert.buildRoleInfos(pmsRoles);
 	}
 
 	/**
@@ -171,7 +152,7 @@ public class PmsRoleQryExec {
 		if ("SUPER_ADMIN".equals(roleCode)) {
 			permissions = pmsPermissionDataService.findAll();
 		} else {
-			List<PmsRolePermission> rolePermissions = pmsRolePermissionDataService.findByRoleId(pmsRole.getId());
+			List<PmsRolePermission> rolePermissions = pmsRolePermissionDataService.findByRoleId(pmsRole.getRoleId());
 			List<Long> collect = rolePermissions.stream().map(PmsRolePermission::getPermissionId).collect(Collectors.toList());
 			permissions = pmsPermissionDataService.findByIds(collect);
 		}

@@ -64,7 +64,7 @@ public class PmsUserQryExec {
 		userDetailInfo.setCreateTime(pmsUser.getCreateTime());
 		userDetailInfo.setUpdateTime(pmsUser.getUpdateTime());
 
-		PmsProfile pmsProfile = pmsProfileDataService.findByUserId(id);
+		PmsProfile pmsProfile = pmsProfileDataService.findByUserId(pmsUser.getUserId());
 		ProfileInfo profileInfo = new ProfileInfo();
 		profileInfo.setGender(pmsProfile.getGender());
 		profileInfo.setAvatar(pmsProfile.getAvatar());
@@ -74,7 +74,7 @@ public class PmsUserQryExec {
 		profileInfo.setNickName(pmsProfile.getNickName());
 		userDetailInfo.setProfile(profileInfo);
 
-		List<RoleInfo> roleInfos = pmsRoleQryExec.getRoleInfosByUserId(pmsUser.getId());
+		List<RoleInfo> roleInfos = pmsRoleQryExec.getRoleInfosByUserId(pmsUser.getUserId());
 		userDetailInfo.setCurrentRole(roleInfos.stream().filter(item -> item.getCode().equals(roleCode)).collect(Collectors.toList()).get(0));
 		userDetailInfo.setRoles(roleInfos);
 		return userDetailInfo;
