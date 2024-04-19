@@ -1,6 +1,7 @@
 package com.luman.pms.application.pms.exec;
 
-import com.luman.pms.client.pms.model.info.RegisterUserProfileInfo;
+import com.luman.pms.application.pms.convert.ProfileConvert;
+import com.luman.pms.application.pms.convert.UserRoleConvert;
 import com.luman.pms.client.pms.model.req.AddUserRolesReq;
 import com.luman.pms.client.pms.model.req.RegisterUserReq;
 import com.luman.pms.domain.pms.gateway.PmsProfileGateway;
@@ -16,8 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Pms用户添加执行
@@ -58,20 +57,14 @@ public class PmsUserAddExec {
 		newPmsUser.setPassword(req.getPassword());
 		newPmsUser.setUserCode(getUserCode());
 		newPmsUser.setEnable(Boolean.TRUE);
-		newPmsUser.setStatus(Boolean.TRUE);
+
+		PmsProfile pmsProfile = ProfileConvert.buildProfile(req.getProfile());
+
 		pmsUserDataService.save(newPmsUser);
-
-		PmsProfile pmsProfile = getPmsProfile(req, newPmsUser);
+		pmsProfile.setUserId(newPmsUser.getId());
 		pmsProfileDataService.save(pmsProfile);
-
-		List<PmsUserRole> roleList = req.getRoleIds().stream().map(roleId -> {
-			PmsUserRole userRole = new PmsUserRole();
-			userRole.setUserId(newPmsUser.getId());
-			userRole.setRoleId(roleId);
-			userRole.setStatus(Boolean.TRUE);
-			return userRole;
-		}).collect(Collectors.toList());
-		pmsUserRoleDataService.saveBatch(roleList);
+		List<PmsUserRole> userRoleList = UserRoleConvert.buildUserRoles(req.getRoleIds(), newPmsUser.getId());
+		pmsUserRoleDataService.saveBatch(userRoleList);
 	}
 
 	/**
@@ -90,41 +83,15 @@ public class PmsUserAddExec {
 	}
 
 	/**
-	 * 获取Pms配置文件
-	 *
-	 * @param req        请求
-	 * @param newPmsUser 新Pms用户
-	 * @return {@link PmsProfile}
-	 */
-	private static PmsProfile getPmsProfile(RegisterUserReq req, PmsUser newPmsUser) {
-		RegisterUserProfileInfo profile = req.getProfile();
-		PmsProfile pmsProfile = new PmsProfile();
-		if (Objects.nonNull(profile)) {
-			pmsProfile.setGender(profile.getGender());
-			pmsProfile.setAvatar(profile.getAvatar());
-			pmsProfile.setAddress(profile.getAddress());
-			pmsProfile.setEmail(profile.getEmail());
-			pmsProfile.setNickName(profile.getNickName());
-		}
-		pmsProfile.setUserId(newPmsUser.getId());
-		pmsProfile.setStatus(Boolean.TRUE);
-		return pmsProfile;
-	}
-
-	/**
 	 * 添加角色
 	 *
 	 * @param req 请求
 	 */
 	public void addRoles(AddUserRolesReq req) {
+
+		List<PmsUserRole> list = UserRoleConvert.buildUserRoles(req.getRoleIds(), req.getId());
+
 		pmsUserRoleDataService.removeByUserId(req.getId());
-		List<PmsUserRole> list = req.getRoleIds().stream().map(roleId -> {
-			PmsUserRole userRole = new PmsUserRole();
-			userRole.setUserId(req.getId());
-			userRole.setRoleId(roleId);
-			userRole.setStatus(Boolean.TRUE);
-			return userRole;
-		}).collect(Collectors.toList());
 		pmsUserRoleDataService.saveBatch(list);
 	}
 }

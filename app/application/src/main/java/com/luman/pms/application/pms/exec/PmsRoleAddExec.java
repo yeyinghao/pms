@@ -1,6 +1,7 @@
 package com.luman.pms.application.pms.exec;
 
 import cn.hutool.core.collection.CollUtil;
+import com.luman.pms.application.pms.convert.RolePermissionConvert;
 import com.luman.pms.client.pms.model.req.AddRolePermissionsReq;
 import com.luman.pms.client.pms.model.req.AddRoleUsersReq;
 import com.luman.pms.client.pms.model.req.CreateRoleReq;
@@ -57,24 +58,10 @@ public class PmsRoleAddExec {
 		newPmsRole.setEnable(Boolean.TRUE);
 		newPmsRole.setStatus(Boolean.TRUE);
 
-		pmsRoleDataService.save(newPmsRole);
-		savePermissionByRole(newPmsRole, req.getPermissionIds());
-	}
+		List<PmsRolePermission> pmsRolePermissions = RolePermissionConvert.buildRolePermissions(pmsRole.getId(), req.getPermissionIds());
 
-	/**
-	 * 按角色保存权限
-	 *
-	 * @param pmsRole       Pms角色
-	 * @param permissionIds ids允许
-	 */
-	private void savePermissionByRole(PmsRole pmsRole, List<Long> permissionIds) {
-		List<PmsRolePermission> permissionList = permissionIds.stream().map(permId -> {
-			PmsRolePermission rolePermission = new PmsRolePermission();
-			rolePermission.setRoleId(pmsRole.getId());
-			rolePermission.setPermissionId(permId);
-			return rolePermission;
-		}).collect(Collectors.toList());
-		pmsRolePermissionDataService.saveBatch(permissionList);
+		pmsRoleDataService.save(newPmsRole);
+		pmsRolePermissionDataService.saveBatch(pmsRolePermissions);
 	}
 
 	/**
@@ -87,7 +74,9 @@ public class PmsRoleAddExec {
 		List<PmsRolePermission> rolePermissions = pmsRolePermissionDataService.findByRoleId(pmsRole.getId());
 		List<Long> list = rolePermissions.stream().map(PmsRolePermission::getPermissionId).collect(Collectors.toList());
 		CollUtil.removeWithAddIf(req.getPermissionIds(), list::contains);
-		savePermissionByRole(pmsRole, req.getPermissionIds());
+
+		List<PmsRolePermission> pmsRolePermissions = RolePermissionConvert.buildRolePermissions(pmsRole.getId(), req.getPermissionIds());
+		pmsRolePermissionDataService.saveBatch(pmsRolePermissions);
 	}
 
 	/**

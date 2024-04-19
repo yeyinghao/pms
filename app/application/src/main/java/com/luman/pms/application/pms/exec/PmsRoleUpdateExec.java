@@ -1,5 +1,6 @@
 package com.luman.pms.application.pms.exec;
 
+import com.luman.pms.application.pms.convert.RolePermissionConvert;
 import com.luman.pms.client.pms.model.req.UpdateRoleReq;
 import com.luman.pms.domain.pms.gateway.PmsRoleGateway;
 import com.luman.pms.domain.pms.gateway.PmsRolePermissionGateway;
@@ -9,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Pms角色更新执行
@@ -43,24 +43,9 @@ public class PmsRoleUpdateExec {
 		pmsRole.setEnable(req.getEnable());
 		pmsRoleDataService.updateById(pmsRole);
 
+		List<PmsRolePermission> pmsRolePermissions = RolePermissionConvert.buildRolePermissions(pmsRole.getId(), req.getPermissionIds());
+
 		pmsRolePermissionDataService.removeByRoleId(pmsRole.getId());
-
-		savePermissionByRole(pmsRole, req.getPermissionIds());
-	}
-
-	/**
-	 * 按角色保存权限
-	 *
-	 * @param pmsRole       Pms角色
-	 * @param permissionIds ids允许
-	 */
-	private void savePermissionByRole(PmsRole pmsRole, List<Long> permissionIds) {
-		List<PmsRolePermission> permissionList = permissionIds.stream().map(permId -> {
-			PmsRolePermission rolePermission = new PmsRolePermission();
-			rolePermission.setRoleId(pmsRole.getId());
-			rolePermission.setPermissionId(permId);
-			return rolePermission;
-		}).collect(Collectors.toList());
-		pmsRolePermissionDataService.saveBatch(permissionList);
+		pmsRolePermissionDataService.saveBatch(pmsRolePermissions);
 	}
 }
