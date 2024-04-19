@@ -6,10 +6,10 @@
 package com.luman.pms.client.pms.api;
 
 import cn.hutool.core.lang.tree.Tree;
-import com.luman.pms.client.pms.dto.info.PermissionInfo;
-import com.luman.pms.client.pms.dto.info.RoleInfo;
-import com.luman.pms.client.pms.dto.info.RolePageInfo;
-import com.luman.pms.client.pms.dto.req.*;
+import com.luman.pms.client.pms.model.info.PermissionInfo;
+import com.luman.pms.client.pms.model.info.RoleInfo;
+import com.luman.pms.client.pms.model.info.RolePageInfo;
+import com.luman.pms.client.pms.model.req.*;
 import com.luman.smy.common.model.PageRes;
 
 import java.util.List;
@@ -25,9 +25,8 @@ public interface PmsRoleManager {
 	 * 创建角色
 	 *
 	 * @param req 请求
-	 * @return {@link Boolean}
 	 */
-	Boolean createRole(CreateRoleReq req);
+	void createRole(CreateRoleReq req);
 
 	/**
 	 * 找到所有
@@ -62,37 +61,31 @@ public interface PmsRoleManager {
 
 	/**
 	 * @param req 请求
-	 * @return {@link Boolean}
 	 */
-	Boolean updateRole(UpdateRoleReq req);
+	void updateRole(UpdateRoleReq req);
 
 	/**
 	 * @param id id
-	 * @return {@link Boolean}
 	 */
-	Boolean removeRole(Long id);
+	void removeRole(Long id);
 
 	/**
 	 * @param req 请求
-	 * @return {@link Boolean}
 	 */
-	Boolean addRolePermissions(AddRolePermissionsReq req);
+	void addRolePermissions(AddRolePermissionsReq req);
 
 	/**
 	 * @return {@link List}<{@link Tree}<{@link Long}>>
 	 */
 	List<Tree<Long>> findRolePermissionsTree();
 
+	/**
+	 * @param req 请求
+	 */
+	void addRoleUsers(AddRoleUsersReq req);
 
 	/**
 	 * @param req 请求
-	 * @return {@link Boolean}
 	 */
-	Boolean addRoleUsers(AddRoleUsersReq req);
-
-	/**
-	 * @param req 请求
-	 * @return {@link Boolean}
-	 */
-	Boolean removeRoleUsers(RemoveRoleUsersReq req);
+	void removeRoleUsers(RemoveRoleUsersReq req);
 }

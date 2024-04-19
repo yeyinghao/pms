@@ -6,9 +6,9 @@
 package com.luman.pms.client.pms.api;
 
 
-import com.luman.pms.client.pms.dto.req.ChangePasswordReq;
-import com.luman.pms.client.pms.dto.req.LoginReq;
-import com.luman.pms.client.pms.dto.res.LoginTokenRes;
+import com.luman.pms.client.pms.model.req.ChangePasswordReq;
+import com.luman.pms.client.pms.model.req.LoginReq;
+import com.luman.pms.client.pms.model.res.LoginTokenRes;
 
 /**
  * 经前综合症身份验证Manager
@@ -43,25 +43,20 @@ public interface PmsAuthManager {
 
     /**
      * 注销
-     *
-     * @return {@link Boolean}
      */
-    Boolean logout();
+    void logout();
 
     /**
      * 验证码
-     *
-     * @return {@link Boolean}
      */
-    Boolean captcha();
+    void captcha();
 
     /**
      * 更改密码
      *
      * @param req 请求
-     * @return {@link Boolean}
      */
-    Boolean changePassword(ChangePasswordReq req);
+    void changePassword(ChangePasswordReq req);
 }
 
 

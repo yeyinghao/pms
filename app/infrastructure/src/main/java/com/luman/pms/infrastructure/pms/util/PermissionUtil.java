@@ -9,7 +9,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeUtil;
-import com.luman.pms.domain.pms.dp.PmsPermission;
+import com.luman.pms.domain.pms.model.PmsPermission;
 import lombok.experimental.UtilityClass;
 
 import java.util.List;

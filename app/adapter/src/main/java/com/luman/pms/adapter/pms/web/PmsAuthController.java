@@ -9,10 +9,10 @@ import cn.dev33.satoken.annotation.SaIgnore;
 import com.luman.pms.adapter.pms.enums.PmsAuthEnum;
 import com.luman.pms.client.pms.api.PmsAuthManager;
 import com.luman.pms.client.pms.api.PmsUserManager;
-import com.luman.pms.client.pms.dto.req.ChangePasswordReq;
-import com.luman.pms.client.pms.dto.req.LoginReq;
-import com.luman.pms.client.pms.dto.req.RegisterUserReq;
-import com.luman.pms.client.pms.dto.res.LoginTokenRes;
+import com.luman.pms.client.pms.model.req.ChangePasswordReq;
+import com.luman.pms.client.pms.model.req.LoginReq;
+import com.luman.pms.client.pms.model.req.RegisterUserReq;
+import com.luman.pms.client.pms.model.res.LoginTokenRes;
 import com.luman.smy.common.helper.ResultHelper;
 import com.luman.smy.common.template.WebTemplate;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +61,7 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/register")
 	public ResultHelper<Boolean> register(@RequestBody RegisterUserReq req) {
-		return webTemplate.execute(PmsAuthEnum.REGISTER, () -> pmsUserManager.register(req));
+		return webTemplate.executeSuccess(PmsAuthEnum.REGISTER, () -> pmsUserManager.register(req));
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class PmsAuthController {
 	 */
 	@GetMapping("/refresh/token")
 	public ResultHelper<LoginTokenRes> refreshToken() {
-		return webTemplate.execute(PmsAuthEnum.REFRESH_TOKEN, () -> pmsAuthMapper.refreshToken());
+		return webTemplate.execute(PmsAuthEnum.REFRESH_TOKEN, pmsAuthMapper::refreshToken);
 	}
 
 	/**
@@ -92,7 +92,7 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/logout")
 	public ResultHelper<Boolean> logout() {
-		return webTemplate.execute(PmsAuthEnum.LOGOUT, () -> pmsAuthMapper.logout());
+		return webTemplate.executeSuccess(PmsAuthEnum.LOGOUT, pmsAuthMapper::logout);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class PmsAuthController {
 	@GetMapping("/captcha")
 	@SaIgnore
 	public ResultHelper<Boolean> captcha() {
-		return webTemplate.execute(PmsAuthEnum.CAPTCHA, () -> pmsAuthMapper.captcha());
+		return webTemplate.executeSuccess(PmsAuthEnum.CAPTCHA, pmsAuthMapper::captcha);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/password")
 	public ResultHelper<Boolean> changePassword(@RequestBody ChangePasswordReq req) {
-		return webTemplate.execute(PmsAuthEnum.CHANGE_PASSWORD, () -> pmsAuthMapper.changePassword(req));
+		return webTemplate.executeSuccess(PmsAuthEnum.CHANGE_PASSWORD, () -> pmsAuthMapper.changePassword(req));
 	}
 
 }

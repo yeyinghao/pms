@@ -6,9 +6,9 @@
 package com.luman.pms.client.pms.api;
 
 import cn.hutool.core.lang.tree.Tree;
-import com.luman.pms.client.pms.dto.info.PermissionInfo;
-import com.luman.pms.client.pms.dto.req.CreatePermissionReq;
-import com.luman.pms.client.pms.dto.req.UpdatePermissionReq;
+import com.luman.pms.client.pms.model.info.PermissionInfo;
+import com.luman.pms.client.pms.model.req.CreatePermissionReq;
+import com.luman.pms.client.pms.model.req.UpdatePermissionReq;
 
 import java.util.List;
 
@@ -23,17 +23,15 @@ public interface PmsPermissionManager {
 	 * 创建
 	 *
 	 * @param req 请求
-	 * @return {@link Boolean}
 	 */
-	Boolean create(CreatePermissionReq req);
+	void create(CreatePermissionReq req);
 
 	/**
 	 * 创建批处理
 	 *
 	 * @param reqs 请求
-	 * @return {@link Boolean}
 	 */
-	Boolean createBatch(List<CreatePermissionReq> reqs);
+	void createBatch(List<CreatePermissionReq> reqs);
 
 	/**
 	 * 查找所有菜单
@@ -59,15 +57,13 @@ public interface PmsPermissionManager {
 	 * updatebyid
 	 *
 	 * @param req 请求
-	 * @return {@link Boolean}
 	 */
-	Boolean updateById(UpdatePermissionReq req);
+	void updateById(UpdatePermissionReq req);
 
 	/**
 	 * @param id id
-	 * @return {@link Boolean}
 	 */
-	Boolean remove(Long id);
+	void remove(Long id);
 
 	/**
 	 * @param parentId parentid
@@ -77,8 +73,7 @@ public interface PmsPermissionManager {
 
 	/**
 	 * @param path
-	 * @return {@link Boolean}
 	 */
-	Boolean validateMenuPath(String path);
+	void validateMenuPath(String path);
 
 }

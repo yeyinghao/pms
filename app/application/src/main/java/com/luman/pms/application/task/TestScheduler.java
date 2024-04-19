@@ -5,7 +5,6 @@
 
 package com.luman.pms.application.task;
 
-import com.luman.pms.application.task.enums.SchedulerEnum;
 import com.luman.smy.task.template.TaskTemplate;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +22,9 @@ public class TestScheduler {
 
 	private final TaskTemplate taskTemplate;
 
-	private final TaskService taskService;
-
 	@XxlJob("testHander")
 	public boolean test() {
-		return taskTemplate.taskHandle(SchedulerEnum.TEST, taskService::datas, taskService::handle);
+//		return taskTemplate.taskHandle(SchedulerEnum.TEST, taskService::datas, taskService::handle);
+		return true;
 	}
 }

@@ -6,9 +6,9 @@
 package com.luman.pms.client.pms.api;
 
 
-import com.luman.pms.client.pms.dto.info.UserDetailInfo;
-import com.luman.pms.client.pms.dto.info.UserPageInfo;
-import com.luman.pms.client.pms.dto.req.*;
+import com.luman.pms.client.pms.model.info.UserDetailInfo;
+import com.luman.pms.client.pms.model.info.UserPageInfo;
+import com.luman.pms.client.pms.model.req.*;
 import com.luman.smy.common.model.PageRes;
 
 /**
@@ -18,29 +18,27 @@ import com.luman.smy.common.model.PageRes;
  * @date 2024/01/12
  */
 public interface PmsUserManager {
+
     /**
      * 注册
      *
      * @param req 请求
-     * @return {@link Boolean}
      */
-    Boolean register(RegisterUserReq req);
+    void register(RegisterUserReq req);
 
     /**
      * 重置密码
      *
      * @param req 请求
-     * @return {@link Boolean}
      */
-    Boolean resetPassword(UpdatePasswordReq req);
+    void resetPassword(UpdatePasswordReq req);
 
     /**
      * 添加角色
      *
      * @param req 请求
-     * @return {@link Boolean}
      */
-    Boolean addRoles(AddUserRolesReq req);
+    void addRoles(AddUserRolesReq req);
 
     /**
      * 细节
@@ -53,15 +51,13 @@ public interface PmsUserManager {
      * 更新配置文件
      *
      * @param req 请求
-     * @return {@link Boolean}
      */
-    Boolean updateProfile(UpdateProfileReq req);
+    void updateProfile(UpdateProfileReq req);
 
     /**
      * @param id id
-     * @return {@link Boolean}
      */
-    Boolean removeUser(Long id);
+    void removeUser(Long id);
 
     /**
      * @param req 请求
@@ -69,5 +65,5 @@ public interface PmsUserManager {
      */
     PageRes<UserPageInfo> queryPage(UserPageReq req);
 
-    Boolean update(UpdateUserReq req);
+    void update(UpdateUserReq req);
 }
