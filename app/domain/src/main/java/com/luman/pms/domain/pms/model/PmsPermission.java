@@ -19,6 +19,11 @@ import lombok.NoArgsConstructor;
 public class PmsPermission extends BaseDP {
 
 	/**
+	 * 权限id
+	 */
+	private Long permissionId;
+
+	/**
 	 * 名称
 	 */
 	private String name;

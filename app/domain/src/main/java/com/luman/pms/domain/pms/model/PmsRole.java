@@ -19,6 +19,11 @@ import lombok.NoArgsConstructor;
 public class PmsRole extends BaseDP {
 
 	/**
+	 * 角色id
+	 */
+	private Long roleId;
+
+	/**
 	 * 编号
 	 */
 	private String code;

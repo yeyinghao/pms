@@ -18,6 +18,11 @@ import lombok.EqualsAndHashCode;
 public class PmsPermissionPO extends BasePO {
 
 	/**
+	 * 权限id
+	 */
+	private Long permissionId;
+
+	/**
 	 * 名称
 	 */
 	private String name;

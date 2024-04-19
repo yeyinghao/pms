@@ -19,6 +19,11 @@ import lombok.NoArgsConstructor;
 public class PmsUser extends BaseDP {
 
 	/**
+	 * 用户id
+	 */
+	private Long userId;
+
+	/**
 	 * 名称
 	 */
 	private String userName;

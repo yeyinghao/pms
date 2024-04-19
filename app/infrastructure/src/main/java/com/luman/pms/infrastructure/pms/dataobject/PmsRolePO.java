@@ -17,6 +17,11 @@ import lombok.EqualsAndHashCode;
 public class PmsRolePO extends BasePO {
 
 	/**
+	 * 角色id
+	 */
+	private Long roleId;
+
+	/**
 	 * 编号
 	 */
 	private String code;

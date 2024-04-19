@@ -18,6 +18,11 @@ import lombok.EqualsAndHashCode;
 public class PmsUserPO extends BasePO {
 
 	/**
+	 * 用户id
+	 */
+	private Long userId;
+
+	/**
 	 * 名称
 	 */
 	private String userName;
