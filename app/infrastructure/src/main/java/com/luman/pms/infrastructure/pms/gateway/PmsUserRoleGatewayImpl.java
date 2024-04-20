@@ -32,8 +32,7 @@ public class PmsUserRoleGatewayImpl extends GatewayImpl<PmsUserRolePO, PmsUserRo
 
 	@Override
 	public List<PmsUserRole> findRolesByUserId(Long userId) {
-		List<PmsUserRolePO> list = lambdaQuery().eq(PmsUserRolePO::getStatus, Boolean.TRUE)
-				.eq(PmsUserRolePO::getUserId, userId).list();
+		List<PmsUserRolePO> list = lambdaQuery().eq(PmsUserRolePO::getUserId, userId).list();
 		return convertToDOs(list);
 	}
 
@@ -44,15 +43,17 @@ public class PmsUserRoleGatewayImpl extends GatewayImpl<PmsUserRolePO, PmsUserRo
 
 	@Override
 	public List<PmsUserRole> findByRoleId(Long roleId) {
-		List<PmsUserRolePO> list = lambdaQuery().eq(PmsUserRolePO::getStatus, Boolean.TRUE)
-				.in(PmsUserRolePO::getRoleId, roleId).list();
+		List<PmsUserRolePO> list = lambdaQuery().in(PmsUserRolePO::getRoleId, roleId).list();
 		return convertToDOs(list);
 	}
 
 	@Override
 	public void removeRoleIdAndUserIds(Long roleId, List<Long> userIds) {
-		lambdaUpdate().eq(PmsUserRolePO::getStatus, Boolean.TRUE)
-				.eq(PmsUserRolePO::getRoleId, roleId)
-				.in(PmsUserRolePO::getUserId, userIds).remove();
+		lambdaUpdate().eq(PmsUserRolePO::getRoleId, roleId).in(PmsUserRolePO::getUserId, userIds).remove();
+	}
+
+	@Override
+	public void removeByRoleId(Long roleId) {
+		lambdaUpdate().eq(PmsUserRolePO::getRoleId, roleId).remove();
 	}
 }

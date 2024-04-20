@@ -3,6 +3,8 @@ package com.luman.pms.domain.pms.gateway;
 import com.luman.pms.domain.pms.model.PmsRole;
 import com.luman.smy.common.gateway.Gateway;
 
+import java.util.List;
+
 /**
  * pms_role表数据库服务
  *
@@ -13,4 +15,6 @@ public interface PmsRoleGateway extends Gateway<PmsRole> {
 	PmsRole findByCodeOrName(String code, String name);
 
 	PmsRole findByCode(String roleCode);
+
+	List<PmsRole> findByRoleIds(List<Long> roleBizIds);
 }

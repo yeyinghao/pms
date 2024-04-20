@@ -69,8 +69,8 @@ public class PmsUserUpdateExec {
 	 * @param req 请求
 	 */
 	public void updateProfile(UpdateProfileReq req) {
-		Long userId = UserTokenUtil.getUserId();
-		PmsProfile pmsProfile = PmsProfile.buildPmsProfile(userId, req);
+		Long id = UserTokenUtil.getId();
+		PmsProfile pmsProfile = PmsProfile.buildPmsProfile(id, req);
 		pmsProfileDataService.updateByUserId(pmsProfile);
 	}
 

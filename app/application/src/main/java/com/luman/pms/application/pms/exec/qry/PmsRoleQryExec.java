@@ -84,7 +84,7 @@ public class PmsRoleQryExec {
 		if (CollectionUtil.isEmpty(roleBizIds)) {
 			return Lists.newArrayList();
 		}
-		return pmsRoleDataService.findByIds(roleBizIds);
+		return pmsRoleDataService.findByRoleIds(roleBizIds);
 	}
 
 	/**

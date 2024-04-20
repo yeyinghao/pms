@@ -30,8 +30,7 @@ public class PmsProfileGatewayImpl extends GatewayImpl<PmsProfilePO, PmsProfile>
 
 	@Override
 	public PmsProfile findByUserId(Long userId) {
-		PmsProfilePO entity = lambdaQuery().eq(PmsProfilePO::getStatus, Boolean.TRUE)
-				.eq(PmsProfilePO::getUserId, userId).one();
+		PmsProfilePO entity = lambdaQuery().eq(PmsProfilePO::getUserId, userId).one();
 		return convertToDO(entity);
 	}
 
@@ -42,7 +41,6 @@ public class PmsProfileGatewayImpl extends GatewayImpl<PmsProfilePO, PmsProfile>
 
 	@Override
 	public void updateByUserId(PmsProfile entity) {
-		lambdaUpdate().eq(PmsProfilePO::getUserId, entity.getUserId())
-				.update(convertToPO(entity));
+		lambdaUpdate().eq(PmsProfilePO::getUserId, entity.getUserId()).update(convertToPO(entity));
 	}
 }

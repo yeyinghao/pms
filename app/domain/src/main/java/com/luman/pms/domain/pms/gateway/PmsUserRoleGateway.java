@@ -19,4 +19,6 @@ public interface PmsUserRoleGateway extends Gateway<PmsUserRole> {
 	List<PmsUserRole> findByRoleId(Long roleId);
 
 	void removeRoleIdAndUserIds(Long roleId, List<Long> userIds);
+
+	void removeByRoleId(Long roleId);
 }

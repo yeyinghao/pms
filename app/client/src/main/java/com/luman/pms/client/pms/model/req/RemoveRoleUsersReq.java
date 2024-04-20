@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 public class RemoveRoleUsersReq {
 
-	private Long roleId;
+	private Long id;
 
 	private List<Long> userIds;
 

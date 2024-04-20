@@ -22,10 +22,24 @@ public class UserTokenUtil {
 	 *
 	 * @return {@link Long}
 	 */
+	public static Long getId() {
+		return ((NumberWithFormat) StpUtil.getExtra(SaTokenConstant.JWT_ID_KEY)).longValue();
+	}
+
+	/**
+	 * 获取用户id
+	 *
+	 * @return {@link Long}
+	 */
 	public static Long getUserId() {
 		return ((NumberWithFormat) StpUtil.getExtra(SaTokenConstant.JWT_USER_ID_KEY)).longValue();
 	}
 
+	/**
+	 * 获取用户代码
+	 *
+	 * @return {@link String}
+	 */
 	public static String getUserCode() {
 		return String.valueOf(StpUtil.getExtra(SaTokenConstant.JWT_USER_CODE_KEY).toString());
 	}

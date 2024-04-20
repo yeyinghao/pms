@@ -1,5 +1,6 @@
 package com.luman.pms.application.pms.exec;
 
+import cn.hutool.core.util.IdUtil;
 import com.luman.pms.application.pms.convert.ProfileConvert;
 import com.luman.pms.application.pms.convert.UserRoleConvert;
 import com.luman.pms.client.pms.model.req.AddUserRolesReq;
@@ -52,18 +53,18 @@ public class PmsUserAddExec {
 		PmsUser pmsUser = pmsUserDataService.findByName(req.getUserName());
 		// 存在报错
 		Assert.isNull(pmsUser, CommErrorEnum.BIZ_ERROR, "用户已存在");
-		PmsUser newPmsUser = new PmsUser();
-		newPmsUser.setUserName(req.getUserName());
-		newPmsUser.setPassword(req.getPassword());
-		newPmsUser.setUserCode(getUserCode());
-		newPmsUser.setEnable(Boolean.TRUE);
+		pmsUser = new PmsUser();
+		pmsUser.setUserId(IdUtil.getSnowflakeNextId());
+		pmsUser.setUserName(req.getUserName());
+		pmsUser.setPassword(req.getPassword());
+		pmsUser.setUserCode(getUserCode());
+		pmsUser.setEnable(Boolean.TRUE);
 
-		PmsProfile pmsProfile = ProfileConvert.buildProfile(req.getProfile());
+		PmsProfile pmsProfile = ProfileConvert.buildProfile(req.getProfile(), pmsUser.getUserId());
+		List<PmsUserRole> userRoleList = UserRoleConvert.buildUserRoles(req.getRoleIds(), pmsUser.getUserId());
 
-		pmsUserDataService.save(newPmsUser);
-		pmsProfile.setUserId(newPmsUser.getId());
+		pmsUserDataService.save(pmsUser);
 		pmsProfileDataService.save(pmsProfile);
-		List<PmsUserRole> userRoleList = UserRoleConvert.buildUserRoles(req.getRoleIds(), newPmsUser.getId());
 		pmsUserRoleDataService.saveBatch(userRoleList);
 	}
 
@@ -89,9 +90,12 @@ public class PmsUserAddExec {
 	 */
 	public void addRoles(AddUserRolesReq req) {
 
+		PmsUser pmsUser = pmsUserDataService.findById(req.getId());
+		Assert.isNull(pmsUser, CommErrorEnum.BIZ_ERROR, "用户不存在");
+
 		List<PmsUserRole> list = UserRoleConvert.buildUserRoles(req.getRoleIds(), req.getId());
 
-		pmsUserRoleDataService.removeByUserId(req.getId());
+		pmsUserRoleDataService.removeByUserId(pmsUser.getUserId());
 		pmsUserRoleDataService.saveBatch(list);
 	}
 }

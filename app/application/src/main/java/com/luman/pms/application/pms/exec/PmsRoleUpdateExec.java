@@ -45,7 +45,7 @@ public class PmsRoleUpdateExec {
 
 		List<PmsRolePermission> pmsRolePermissions = RolePermissionConvert.buildRolePermissions(pmsRole.getId(), req.getPermissionIds());
 
-		pmsRolePermissionDataService.removeByRoleId(pmsRole.getId());
+		pmsRolePermissionDataService.removeByRoleId(pmsRole.getRoleId());
 		pmsRolePermissionDataService.saveBatch(pmsRolePermissions);
 	}
 }

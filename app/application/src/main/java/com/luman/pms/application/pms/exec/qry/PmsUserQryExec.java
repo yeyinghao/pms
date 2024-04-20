@@ -52,7 +52,7 @@ public class PmsUserQryExec {
 	 */
 	public UserDetailInfo detail() {
 
-		Long id = UserTokenUtil.getUserId();
+		Long id = UserTokenUtil.getId();
 		String roleCode = (String) StpUtil.getExtra(SaTokenConstant.JWT_CURRENT_ROLE_KEY);
 
 		PmsUser pmsUser = pmsUserDataService.findById(id);

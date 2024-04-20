@@ -58,7 +58,7 @@ public class PmsRoleAddExec {
 		newPmsRole.setEnable(Boolean.TRUE);
 		newPmsRole.setStatus(Boolean.TRUE);
 
-		List<PmsRolePermission> pmsRolePermissions = RolePermissionConvert.buildRolePermissions(pmsRole.getId(), req.getPermissionIds());
+		List<PmsRolePermission> pmsRolePermissions = RolePermissionConvert.buildRolePermissions(pmsRole.getRoleId(), req.getPermissionIds());
 
 		pmsRoleDataService.save(newPmsRole);
 		pmsRolePermissionDataService.saveBatch(pmsRolePermissions);
@@ -71,11 +71,11 @@ public class PmsRoleAddExec {
 	 */
 	public void addRolePermissions(AddRolePermissionsReq req) {
 		PmsRole pmsRole = pmsRoleDataService.findById(req.getId());
-		List<PmsRolePermission> rolePermissions = pmsRolePermissionDataService.findByRoleId(pmsRole.getId());
+		List<PmsRolePermission> rolePermissions = pmsRolePermissionDataService.findByRoleId(pmsRole.getRoleId());
 		List<Long> list = rolePermissions.stream().map(PmsRolePermission::getPermissionId).collect(Collectors.toList());
 		CollUtil.removeWithAddIf(req.getPermissionIds(), list::contains);
 
-		List<PmsRolePermission> pmsRolePermissions = RolePermissionConvert.buildRolePermissions(pmsRole.getId(), req.getPermissionIds());
+		List<PmsRolePermission> pmsRolePermissions = RolePermissionConvert.buildRolePermissions(pmsRole.getRoleId(), req.getPermissionIds());
 		pmsRolePermissionDataService.saveBatch(pmsRolePermissions);
 	}
 

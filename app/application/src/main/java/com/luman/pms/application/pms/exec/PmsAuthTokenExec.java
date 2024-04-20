@@ -7,9 +7,9 @@ import cn.hutool.core.util.StrUtil;
 import com.luman.pms.application.pms.exec.qry.PmsRoleQryExec;
 import com.luman.pms.client.pms.model.req.LoginReq;
 import com.luman.pms.client.pms.model.res.LoginTokenRes;
+import com.luman.pms.domain.pms.gateway.PmsUserGateway;
 import com.luman.pms.domain.pms.model.PmsRole;
 import com.luman.pms.domain.pms.model.PmsUser;
-import com.luman.pms.domain.pms.gateway.PmsUserGateway;
 import com.luman.pms.infrastructure.pms.util.UserTokenUtil;
 import com.luman.smy.common.enums.CommErrorEnum;
 import com.luman.smy.common.exception.Assert;
@@ -80,7 +80,8 @@ public class PmsAuthTokenExec {
 	public LoginTokenRes refreshToken() {
 		SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
 		StpUtil.login(tokenInfo.getLoginId(),
-				SaLoginConfig.setExtra(SaTokenConstant.JWT_USER_ID_KEY, StpUtil.getExtra(SaTokenConstant.JWT_USER_ID_KEY))
+				SaLoginConfig.setExtra(SaTokenConstant.JWT_ID_KEY, StpUtil.getExtra(SaTokenConstant.JWT_ID_KEY))
+						.setExtra(SaTokenConstant.JWT_USER_ID_KEY, StpUtil.getExtra(SaTokenConstant.JWT_USER_ID_KEY))
 						.setExtra(SaTokenConstant.JWT_USERNAME_KEY, StpUtil.getExtra(SaTokenConstant.JWT_USERNAME_KEY))
 						.setExtra(SaTokenConstant.JWT_CURRENT_ROLE_KEY, StpUtil.getExtra(SaTokenConstant.JWT_CURRENT_ROLE_KEY))
 						.setExtra(SaTokenConstant.JWT_ROLE_LIST_KEY, StpUtil.getExtra(SaTokenConstant.JWT_ROLE_LIST_KEY)));
@@ -97,10 +98,10 @@ public class PmsAuthTokenExec {
 	 * @return {@link LoginTokenRes}
 	 */
 	public LoginTokenRes switchRole(String roleCode) {
-		Long userId = UserTokenUtil.getUserId();
-		PmsUser pmsUser = pmsUserDataService.findById(userId);
+		Long id = UserTokenUtil.getId();
+		PmsUser pmsUser = pmsUserDataService.findById(id);
 		// 查询用户的角色
-		List<PmsRole> roles = pmsRoleQryExec.getPmsRolesByUserId(userId);
+		List<PmsRole> roles = pmsRoleQryExec.getPmsRolesByUserId(pmsUser.getUserId());
 		PmsRole currentRole = null;
 		for (PmsRole role : roles) {
 			if (roleCode.equals(role.getCode())) {
@@ -121,8 +122,9 @@ public class PmsAuthTokenExec {
 	 */
 	private LoginTokenRes generateToken(PmsUser user, List<PmsRole> roles, String currentRoleCode) {
 		// 密码验证成功
-		StpUtil.login(user.getId(), SaLoginConfig.setExtra(SaTokenConstant.JWT_USER_ID_KEY, user.getId())
+		StpUtil.login(user.getId(), SaLoginConfig.setExtra(SaTokenConstant.JWT_ID_KEY, user.getId())
 				.setExtra(SaTokenConstant.JWT_USERNAME_KEY, user.getUserName())
+				.setExtra(SaTokenConstant.JWT_USER_ID_KEY, user.getUserId())
 				.setExtra(SaTokenConstant.JWT_CURRENT_ROLE_KEY, currentRoleCode)
 				.setExtra(SaTokenConstant.JWT_USER_CODE_KEY, user.getUserCode())
 				.setExtra(SaTokenConstant.JWT_ROLE_LIST_KEY, roles));

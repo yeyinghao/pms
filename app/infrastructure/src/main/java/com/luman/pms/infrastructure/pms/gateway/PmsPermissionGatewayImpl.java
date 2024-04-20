@@ -37,18 +37,14 @@ public class PmsPermissionGatewayImpl extends GatewayImpl<PmsPermissionPO, PmsPe
 
 	@Override
 	public List<PmsPermission> findButtonAndApi() {
-		List<PmsPermissionPO> list = lambdaQuery().eq(PmsPermissionPO::getStatus, Boolean.TRUE)
-				.in(PmsPermissionPO::getType, "BUTTON", "API")
-				.orderByAsc(PmsPermissionPO::getOrder)
-				.list();
+		List<PmsPermissionPO> list = lambdaQuery().in(PmsPermissionPO::getType, "BUTTON", "API").orderByAsc(PmsPermissionPO::getOrder).list();
 		return convertToDOs(list);
 	}
 
 	@Override
 	public List<PmsPermission> findAllByMenu() {
-		List<PmsPermissionPO> list = lambdaQuery().eq(PmsPermissionPO::getStatus, Boolean.TRUE)
-				.eq(PmsPermissionPO::getStatus, Boolean.TRUE)
-				.eq(PmsPermissionPO::getType,"MENU").list();
+		List<PmsPermissionPO> list = lambdaQuery()
+				.eq(PmsPermissionPO::getType, "MENU").list();
 		return convertToDOs(list);
 	}
 }

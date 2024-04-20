@@ -32,8 +32,7 @@ public class PmsRolePermissionGatewayImpl extends GatewayImpl<PmsRolePermissionP
 
 	@Override
 	public List<PmsRolePermission> findByRoleId(Long roleId) {
-		List<PmsRolePermissionPO> list = lambdaQuery().eq(PmsRolePermissionPO::getStatus, Boolean.TRUE)
-				.in(PmsRolePermissionPO::getRoleId, roleId).list();
+		List<PmsRolePermissionPO> list = lambdaQuery().in(PmsRolePermissionPO::getRoleId, roleId).list();
 		return convertToDOs(list);
 	}
 

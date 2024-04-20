@@ -40,9 +40,10 @@ public class PmsRoleDeleteExec {
 	 */
 	public void removeRole(Long id) {
 		PmsRole pmsRole = pmsRoleDataService.findById(id);
+
 		pmsRoleDataService.deleteById(id);
-		pmsRolePermissionDataService.removeByRoleId(pmsRole.getId());
-		pmsUserRoleDataService.removeByUserId(pmsRole.getId());
+		pmsRolePermissionDataService.removeByRoleId(pmsRole.getRoleId());
+		pmsUserRoleDataService.removeByRoleId(pmsRole.getRoleId());
 	}
 
 	/**
@@ -51,8 +52,8 @@ public class PmsRoleDeleteExec {
 	 * @param req 请求
 	 */
 	public void removeRoleUsers(RemoveRoleUsersReq req) {
-		PmsRole pmsRole = pmsRoleDataService.findById(req.getRoleId());
-		pmsUserRoleDataService.removeRoleIdAndUserIds(pmsRole.getId(), req.getUserIds());
+		PmsRole pmsRole = pmsRoleDataService.findById(req.getId());
+		pmsUserRoleDataService.removeRoleIdAndUserIds(pmsRole.getRoleId(), req.getUserIds());
 	}
 
 }
