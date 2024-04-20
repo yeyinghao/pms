@@ -75,8 +75,8 @@ public class PmsPermissionManagerImpl implements PmsPermissionManager {
 	}
 
 	@Override
-	public List<PermissionInfo> findButtonAndApi(Long parentId) {
-		return pmsPermissionQryExec.findButtonAndApi(parentId);
+	public List<PermissionInfo> findButtonByParentId(Long parentId) {
+		return pmsPermissionQryExec.findButtonByParentId(parentId);
 	}
 
 	@Override

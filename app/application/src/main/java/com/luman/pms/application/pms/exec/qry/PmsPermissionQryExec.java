@@ -1,10 +1,13 @@
 package com.luman.pms.application.pms.exec.qry;
 
 import cn.hutool.core.lang.tree.Tree;
+import com.luman.pms.application.pms.convert.PermissionConvert;
 import com.luman.pms.client.pms.model.info.PermissionInfo;
-import com.luman.pms.domain.pms.model.PmsPermission;
+import com.luman.pms.domain.pms.enums.PermissionTypeEnum;
 import com.luman.pms.domain.pms.gateway.PmsPermissionGateway;
-import com.luman.pms.infrastructure.pms.util.PermissionUtil;
+import com.luman.pms.domain.pms.model.PmsPermission;
+import com.luman.smy.common.enums.CommErrorEnum;
+import com.luman.smy.common.exception.Assert;
 import com.luman.smy.common.util.CopyUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -42,8 +45,8 @@ public class PmsPermissionQryExec {
 	 * @return {@link List}<{@link Tree}<{@link Long}>>
 	 */
 	public List<Tree<Long>> findAllMenuTree() {
-		List<PmsPermission> all = pmsPermissionDataService.findAll();
-		return PermissionUtil.toTreeNode(all, null);
+		List<PmsPermission> all = pmsPermissionDataService.findAllMenu(PermissionTypeEnum.MENU);
+		return PermissionConvert.buildTreeNode(all, null);
 	}
 
 	/**
@@ -53,8 +56,8 @@ public class PmsPermissionQryExec {
 	 * @return {@link PermissionInfo}
 	 */
 	public PermissionInfo findById(Long id) {
-		PmsPermission byId = pmsPermissionDataService.findById(id);
-		return CopyUtil.copy(byId, PermissionInfo::new);
+		PmsPermission permission = pmsPermissionDataService.findById(id);
+		return CopyUtil.copy(permission, PermissionInfo::new);
 	}
 
 	/**
@@ -63,8 +66,9 @@ public class PmsPermissionQryExec {
 	 * @param parentId 家长。id
 	 * @return {@link List}<{@link PermissionInfo}>
 	 */
-	public List<PermissionInfo> findButtonAndApi(Long parentId) {
-		return CopyUtil.copyList(pmsPermissionDataService.findButtonAndApi(), PermissionInfo::new);
+	public List<PermissionInfo> findButtonByParentId(Long parentId) {
+		List<PmsPermission> permissionList = pmsPermissionDataService.findButtonByParentId(parentId, PermissionTypeEnum.BUTTON);
+		return CopyUtil.copyList(permissionList, PermissionInfo::new);
 	}
 
 	/**
@@ -73,6 +77,7 @@ public class PmsPermissionQryExec {
 	 * @param path 路径
 	 */
 	public void validateMenuPath(String path) {
-		pmsPermissionDataService.validateMenuPath(path);
+		Boolean isExists = pmsPermissionDataService.validateMenuPath(path);
+		Assert.isTrue(isExists, CommErrorEnum.BIZ_ERROR, "路径不合法");
 	}
 }

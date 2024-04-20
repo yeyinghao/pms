@@ -13,14 +13,24 @@ import lombok.EqualsAndHashCode;
  * 用户分页查询
  *
  * @author dhb
+ * @date 2024/04/20
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class UserPageReq extends PageReq {
 
+    /**
+     * 用户名
+     */
     private String username;
 
+    /**
+     * 性别
+     */
     private Integer gender;
 
+    /**
+     * 启用
+     */
     private Boolean enable;
 }

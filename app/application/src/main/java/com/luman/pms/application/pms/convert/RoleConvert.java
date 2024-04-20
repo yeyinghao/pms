@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import com.google.common.collect.Lists;
 import com.luman.pms.client.pms.model.info.RoleInfo;
 import com.luman.pms.domain.pms.model.PmsRole;
+import com.luman.pms.domain.pms.model.PmsRolePermission;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +28,15 @@ public class RoleConvert {
 			roleInfo.setName(item.getName());
 			roleInfo.setEnable(item.getEnable());
 			return roleInfo;
+		}).collect(Collectors.toList());
+	}
+
+	public static List<PmsRolePermission> buildRolePermissions(Long roleId, List<Long> permissionIds) {
+		return permissionIds.stream().map(permId -> {
+			PmsRolePermission rolePermission = new PmsRolePermission();
+			rolePermission.setRoleId(roleId);
+			rolePermission.setPermissionId(permId);
+			return rolePermission;
 		}).collect(Collectors.toList());
 	}
 }

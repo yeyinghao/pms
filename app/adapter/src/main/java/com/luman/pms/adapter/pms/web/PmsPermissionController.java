@@ -121,9 +121,9 @@ public class PmsPermissionController {
 	 * @param parentId parentid
 	 * @return {@link ResultHelper}<{@link List}<{@link PmsPermission}>>
 	 */
-	@GetMapping("/button-and-api/{parentId}")
-	public ResultHelper<List<PermissionInfo>> findButtonAndApi(@PathVariable Long parentId) {
-		return webTemplate.execute(PmsPermissionEnum.FIND_BUTTON_AND_API, () -> pmsPermissionManager.findButtonAndApi(parentId));
+	@GetMapping("/button/{parentId}")
+	public ResultHelper<List<PermissionInfo>> findButtonByParentId(@PathVariable Long parentId) {
+		return webTemplate.execute(PmsPermissionEnum.FIND_BUTTON_AND_API, () -> pmsPermissionManager.findButtonByParentId(parentId));
 	}
 
 	/**

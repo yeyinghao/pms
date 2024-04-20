@@ -55,15 +55,24 @@ public interface PmsUserManager {
     void updateProfile(UpdateProfileReq req);
 
     /**
+     * 删除用户
+     *
      * @param id id
      */
     void removeUser(Long id);
 
     /**
+     * 查询页面
+     *
      * @param req 请求
      * @return {@link PageRes}<{@link UserPageInfo}>
      */
     PageRes<UserPageInfo> queryPage(UserPageReq req);
 
+    /**
+     * 更新
+     *
+     * @param req 请求
+     */
     void update(UpdateUserReq req);
 }

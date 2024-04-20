@@ -13,12 +13,19 @@ import java.util.List;
  * 给角色分配用户
  *
  * @author dhb
+ * @date 2024/04/20
  */
 @Data
 public class RemoveRoleUsersReq {
 
+	/**
+	 * id
+	 */
 	private Long id;
 
+	/**
+	 * 用户id
+	 */
 	private List<Long> userIds;
 
 }

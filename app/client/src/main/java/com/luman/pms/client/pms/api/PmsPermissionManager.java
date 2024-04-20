@@ -41,12 +41,14 @@ public interface PmsPermissionManager {
 	List<PermissionInfo> findAllMenu();
 
 	/**
+	 * 查找所有菜单树
+	 *
 	 * @return {@link List}<{@link Tree}<{@link Long}>>
 	 */
 	List<Tree<Long>> findAllMenuTree();
 
 	/**
-	 * findbyid
+	 * 找到由id
 	 *
 	 * @param id id
 	 * @return {@link PermissionInfo}
@@ -54,13 +56,15 @@ public interface PmsPermissionManager {
 	PermissionInfo findById(Long id);
 
 	/**
-	 * updatebyid
+	 * 更新由id
 	 *
 	 * @param req 请求
 	 */
 	void updateById(UpdatePermissionReq req);
 
 	/**
+	 * 删除
+	 *
 	 * @param id id
 	 */
 	void remove(Long id);
@@ -69,10 +73,12 @@ public interface PmsPermissionManager {
 	 * @param parentId parentid
 	 * @return {@link List}<{@link PermissionInfo}>
 	 */
-	List<PermissionInfo> findButtonAndApi(Long parentId);
+	List<PermissionInfo> findButtonByParentId(Long parentId);
 
 	/**
-	 * @param path
+	 * 验证菜单路径
+	 *
+	 * @param path 路径
 	 */
 	void validateMenuPath(String path);
 

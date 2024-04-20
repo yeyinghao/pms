@@ -39,6 +39,9 @@ public class PmsAuthController {
 	 */
 	private final PmsUserManager pmsUserManager;
 
+	/**
+	 * 网页模板
+	 */
 	private final WebTemplate webTemplate;
 
 	/**

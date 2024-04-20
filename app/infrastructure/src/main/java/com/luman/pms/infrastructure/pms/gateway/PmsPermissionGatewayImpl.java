@@ -1,5 +1,6 @@
 package com.luman.pms.infrastructure.pms.gateway;
 
+import com.luman.pms.domain.pms.enums.PermissionTypeEnum;
 import com.luman.pms.domain.pms.gateway.PmsPermissionGateway;
 import com.luman.pms.domain.pms.model.PmsPermission;
 import com.luman.pms.infrastructure.pms.dataobject.PmsPermissionPO;
@@ -36,15 +37,16 @@ public class PmsPermissionGatewayImpl extends GatewayImpl<PmsPermissionPO, PmsPe
 	}
 
 	@Override
-	public List<PmsPermission> findButtonAndApi() {
-		List<PmsPermissionPO> list = lambdaQuery().in(PmsPermissionPO::getType, "BUTTON", "API").orderByAsc(PmsPermissionPO::getOrder).list();
+	public List<PmsPermission> findButtonByParentId(Long parentId, PermissionTypeEnum permissionType) {
+		List<PmsPermissionPO> list = lambdaQuery().eq(PmsPermissionPO::getParentId, parentId)
+				.eq(PmsPermissionPO::getType, permissionType.name())
+				.orderByAsc(PmsPermissionPO::getOrder).list();
 		return convertToDOs(list);
 	}
 
 	@Override
-	public List<PmsPermission> findAllByMenu() {
-		List<PmsPermissionPO> list = lambdaQuery()
-				.eq(PmsPermissionPO::getType, "MENU").list();
+	public List<PmsPermission> findAllMenu(PermissionTypeEnum permissionType) {
+		List<PmsPermissionPO> list = lambdaQuery().eq(PmsPermissionPO::getType, permissionType.name()).list();
 		return convertToDOs(list);
 	}
 }

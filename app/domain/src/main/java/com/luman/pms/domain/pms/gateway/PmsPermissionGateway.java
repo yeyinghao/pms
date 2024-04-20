@@ -1,5 +1,6 @@
 package com.luman.pms.domain.pms.gateway;
 
+import com.luman.pms.domain.pms.enums.PermissionTypeEnum;
 import com.luman.pms.domain.pms.model.PmsPermission;
 import com.luman.smy.common.gateway.Gateway;
 
@@ -15,8 +16,8 @@ public interface PmsPermissionGateway extends Gateway<PmsPermission> {
 
 	Boolean validateMenuPath(String path);
 
-	List<PmsPermission> findButtonAndApi();
+	List<PmsPermission> findButtonByParentId(Long parentId, PermissionTypeEnum permissionType);
 
-	List<PmsPermission> findAllByMenu();
+	List<PmsPermission> findAllMenu(PermissionTypeEnum permissionType);
 
 }

@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.lang.tree.Tree;
 import com.google.common.collect.Lists;
+import com.luman.pms.application.pms.convert.PermissionConvert;
 import com.luman.pms.application.pms.convert.RoleConvert;
 import com.luman.pms.client.pms.model.info.PermissionInfo;
 import com.luman.pms.client.pms.model.info.RoleInfo;
@@ -17,7 +18,6 @@ import com.luman.pms.domain.pms.model.PmsPermission;
 import com.luman.pms.domain.pms.model.PmsRole;
 import com.luman.pms.domain.pms.model.PmsRolePermission;
 import com.luman.pms.domain.pms.model.PmsUserRole;
-import com.luman.pms.infrastructure.pms.util.PermissionUtil;
 import com.luman.smy.common.model.PageRes;
 import com.luman.smy.common.util.CopyUtil;
 import com.luman.smy.dal.util.PageUtil;
@@ -156,6 +156,6 @@ public class PmsRoleQryExec {
 			List<Long> collect = rolePermissions.stream().map(PmsRolePermission::getPermissionId).collect(Collectors.toList());
 			permissions = pmsPermissionDataService.findByIds(collect);
 		}
-		return PermissionUtil.toTreeNode(permissions, null);
+		return PermissionConvert.buildTreeNode(permissions, null);
 	}
 }

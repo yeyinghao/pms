@@ -2,7 +2,7 @@ package com.luman.pms.application.pms.exec;
 
 import cn.hutool.core.util.IdUtil;
 import com.luman.pms.application.pms.convert.ProfileConvert;
-import com.luman.pms.application.pms.convert.UserRoleConvert;
+import com.luman.pms.application.pms.convert.UserConvert;
 import com.luman.pms.client.pms.model.req.AddUserRolesReq;
 import com.luman.pms.client.pms.model.req.RegisterUserReq;
 import com.luman.pms.domain.pms.gateway.PmsProfileGateway;
@@ -61,7 +61,7 @@ public class PmsUserAddExec {
 		pmsUser.setEnable(Boolean.TRUE);
 
 		PmsProfile pmsProfile = ProfileConvert.buildProfile(req.getProfile(), pmsUser.getUserId());
-		List<PmsUserRole> userRoleList = UserRoleConvert.buildUserRoles(req.getRoleIds(), pmsUser.getUserId());
+		List<PmsUserRole> userRoleList = UserConvert.buildUserRoles(req.getRoleIds(), pmsUser.getUserId());
 
 		pmsUserDataService.save(pmsUser);
 		pmsProfileDataService.save(pmsProfile);
@@ -93,7 +93,7 @@ public class PmsUserAddExec {
 		PmsUser pmsUser = pmsUserDataService.findById(req.getId());
 		Assert.isNull(pmsUser, CommErrorEnum.BIZ_ERROR, "用户不存在");
 
-		List<PmsUserRole> list = UserRoleConvert.buildUserRoles(req.getRoleIds(), req.getId());
+		List<PmsUserRole> list = UserConvert.buildUserRoles(req.getRoleIds(), req.getId());
 
 		pmsUserRoleDataService.removeByUserId(pmsUser.getUserId());
 		pmsUserRoleDataService.saveBatch(list);

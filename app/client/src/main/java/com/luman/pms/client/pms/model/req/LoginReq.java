@@ -30,8 +30,14 @@ public class LoginReq {
      */
     private String captcha;
 
+    /**
+     * 验证码key
+     */
     private String captchaKey;
 
+    /**
+     * 是快速
+     */
     private Boolean isQuick;
 
 }

@@ -101,13 +101,13 @@ public class PmsUserQryExec {
 			userPageInfo.setEnable(item.getEnable());
 			userPageInfo.setCreateTime(item.getCreateTime());
 			userPageInfo.setUpdateTime(item.getUpdateTime());
-			PmsProfile pmsProfile = pmsProfileDataService.findByUserId(item.getId());
+			PmsProfile pmsProfile = pmsProfileDataService.findByUserId(item.getUserId());
 			userPageInfo.setGender(pmsProfile.getGender());
 			userPageInfo.setAvatar(pmsProfile.getAvatar());
 			userPageInfo.setAddress(pmsProfile.getAddress());
 			userPageInfo.setEmail(pmsProfile.getEmail());
 			// 查询用户的角色
-			userPageInfo.setRoles(pmsRoleQryExec.getRoleInfosByUserId(item.getId()));
+			userPageInfo.setRoles(pmsRoleQryExec.getRoleInfosByUserId(item.getUserId()));
 			pageInfos.add(userPageInfo);
 		});
 		pageResp.setRecords(pageInfos);

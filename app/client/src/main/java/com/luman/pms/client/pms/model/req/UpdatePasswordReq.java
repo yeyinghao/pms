@@ -14,12 +14,19 @@ import javax.validation.constraints.NotBlank;
  * 重置密码
  *
  * @author dhb
+ * @date 2024/04/20
  */
 @Data
 public class UpdatePasswordReq {
 
+	/**
+	 * id
+	 */
 	private Long id;
 
+	/**
+	 * 密码
+	 */
 	@NotBlank(message = "密码不能为空")
 	@Length(min = 6, max = 20, message = "密码长度必须大于6到20之间")
 	private String password;

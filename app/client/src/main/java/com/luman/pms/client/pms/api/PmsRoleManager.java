@@ -60,31 +60,43 @@ public interface PmsRoleManager {
 	RoleInfo findById(Long id);
 
 	/**
+	 * 更新作用
+	 *
 	 * @param req 请求
 	 */
 	void updateRole(UpdateRoleReq req);
 
 	/**
+	 * 删除角色
+	 *
 	 * @param id id
 	 */
 	void removeRole(Long id);
 
 	/**
+	 * 添加角色权限
+	 *
 	 * @param req 请求
 	 */
 	void addRolePermissions(AddRolePermissionsReq req);
 
 	/**
+	 * 查找角色权限树
+	 *
 	 * @return {@link List}<{@link Tree}<{@link Long}>>
 	 */
 	List<Tree<Long>> findRolePermissionsTree();
 
 	/**
+	 * 添加角色用户
+	 *
 	 * @param req 请求
 	 */
 	void addRoleUsers(AddRoleUsersReq req);
 
 	/**
+	 * 删除角色用户
+	 *
 	 * @param req 请求
 	 */
 	void removeRoleUsers(RemoveRoleUsersReq req);

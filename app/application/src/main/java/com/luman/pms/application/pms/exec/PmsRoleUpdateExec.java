@@ -1,6 +1,6 @@
 package com.luman.pms.application.pms.exec;
 
-import com.luman.pms.application.pms.convert.RolePermissionConvert;
+import com.luman.pms.application.pms.convert.RoleConvert;
 import com.luman.pms.client.pms.model.req.UpdateRoleReq;
 import com.luman.pms.domain.pms.gateway.PmsRoleGateway;
 import com.luman.pms.domain.pms.gateway.PmsRolePermissionGateway;
@@ -43,7 +43,7 @@ public class PmsRoleUpdateExec {
 		pmsRole.setEnable(req.getEnable());
 		pmsRoleDataService.updateById(pmsRole);
 
-		List<PmsRolePermission> pmsRolePermissions = RolePermissionConvert.buildRolePermissions(pmsRole.getId(), req.getPermissionIds());
+		List<PmsRolePermission> pmsRolePermissions = RoleConvert.buildRolePermissions(pmsRole.getId(), req.getPermissionIds());
 
 		pmsRolePermissionDataService.removeByRoleId(pmsRole.getRoleId());
 		pmsRolePermissionDataService.saveBatch(pmsRolePermissions);
