@@ -1,8 +1,9 @@
 package com.luman.pms.application.pms.exec;
 
+import cn.hutool.core.util.IdUtil;
 import com.luman.pms.client.pms.model.req.CreatePermissionReq;
-import com.luman.pms.domain.pms.model.PmsPermission;
 import com.luman.pms.domain.pms.gateway.PmsPermissionGateway;
+import com.luman.pms.domain.pms.model.PmsPermission;
 import com.luman.smy.common.util.CopyUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,7 @@ public class PmsPermissionAddExec {
 	 */
 	public Boolean create(CreatePermissionReq req) {
 		PmsPermission pmsPermission = CopyUtil.copy(req, PmsPermission::new);
+		pmsPermission.setPermissionId(IdUtil.getSnowflakeNextId());
 		pmsPermissionDataService.save(pmsPermission);
 		return Boolean.TRUE;
 	}

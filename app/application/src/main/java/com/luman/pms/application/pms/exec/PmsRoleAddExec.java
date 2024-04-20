@@ -1,6 +1,7 @@
 package com.luman.pms.application.pms.exec;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.IdUtil;
 import com.luman.pms.application.pms.convert.RolePermissionConvert;
 import com.luman.pms.client.pms.model.req.AddRolePermissionsReq;
 import com.luman.pms.client.pms.model.req.AddRoleUsersReq;
@@ -52,15 +53,16 @@ public class PmsRoleAddExec {
 	public void createRole(CreateRoleReq req) {
 		PmsRole pmsRole = pmsRoleDataService.findByCodeOrName(req.getCode(), req.getName());
 		Assert.notNull(pmsRole, CommErrorEnum.BIZ_ERROR);
-		PmsRole newPmsRole = new PmsRole();
-		newPmsRole.setCode(req.getCode());
-		newPmsRole.setName(req.getName());
-		newPmsRole.setEnable(Boolean.TRUE);
-		newPmsRole.setStatus(Boolean.TRUE);
+		pmsRole = new PmsRole();
+		pmsRole.setRoleId(IdUtil.getSnowflakeNextId());
+		pmsRole.setCode(req.getCode());
+		pmsRole.setName(req.getName());
+		pmsRole.setEnable(Boolean.TRUE);
+		pmsRole.setStatus(Boolean.TRUE);
 
 		List<PmsRolePermission> pmsRolePermissions = RolePermissionConvert.buildRolePermissions(pmsRole.getRoleId(), req.getPermissionIds());
 
-		pmsRoleDataService.save(newPmsRole);
+		pmsRoleDataService.save(pmsRole);
 		pmsRolePermissionDataService.saveBatch(pmsRolePermissions);
 	}
 
