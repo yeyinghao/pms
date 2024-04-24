@@ -17,39 +17,39 @@ import lombok.ToString;
 public enum PmsRoleEnum implements BaseEnum {
 
 	/**
-	 * 查询用户列表
+	 * 查询用户角色列表
 	 */
-	GET_USERS("查询用户列表"),
+	GET_USERS("查询用户角色列表"),
 
 	/**
-	 * 创建
+	 * 创建角色
 	 */
-	CREATE("创建"),
+	CREATE("创建角色"),
 
 	/**
-	 * 更新
+	 * 更新角色
 	 */
-	UPDATE("更新"),
+	UPDATE("更新角色"),
 
 	/**
-	 * findbyid
+	 * 查询单个角色
 	 */
-	FIND_BY_ID("查询单个"),
+	FIND_BY_ID("查询单个角色"),
 
 	/**
-	 * 删除
+	 * 删除角色
 	 */
-	REMOVE("删除"),
+	REMOVE("删除角色"),
 
 	/**
-	 * 找到所有
+	 * 查询所有角色
 	 */
-	FIND_ALL("查询所有"),
+	FIND_ALL("查询所有角色"),
 
 	/**
-	 * 页面
+	 * 分页查询角色
 	 */
-	PAGE("分页查询"),
+	PAGE("分页查询角色"),
 
 	/**
 	 * 查找角色权限
@@ -62,9 +62,9 @@ public enum PmsRoleEnum implements BaseEnum {
 	ADD_ROLE_PERMISSIONS("添加角色权限"),
 
 	/**
-	 * 权限tree
+	 * 权限角色树
 	 */
-	PERMISSION_TREE("权限树"),
+	PERMISSION_TREE("权限角色树"),
 
 	/**
 	 * 添加角色用户

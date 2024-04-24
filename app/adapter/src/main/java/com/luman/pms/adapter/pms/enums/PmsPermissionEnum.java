@@ -22,64 +22,64 @@ public enum PmsPermissionEnum implements BaseEnum {
 	GET_USERS("查询用户列表"),
 
 	/**
-	 * 创建
+	 * 创建权限
 	 */
-	CREATE("创建"),
+	CREATE("创建权限"),
 
 	/**
-	 * 批量创建
+	 * 批量创建权限
 	 */
-	BATCH_CREATE("批量创建"),
+	BATCH_CREATE("批量创建权限"),
 
 	/**
-	 * 更新
+	 * 更新权限
 	 */
-	UPDATE("更新"),
+	UPDATE("更新权限"),
 
 	/**
-	 * 批量更新
+	 * 批量更新权限
 	 */
-	BATCH_UPDATE("批量更新"),
+	BATCH_UPDATE("批量更新权限"),
 
 	/**
-	 * 删除
+	 * 删除权限
 	 */
-	DELETE("删除"),
+	DELETE("删除权限"),
 
 	/**
-	 * 批量删除
+	 * 批量删除权限
 	 */
-	BATCH_DELETE("批量删除"),
+	BATCH_DELETE("批量删除权限"),
 
 	/**
-	 * 找到所有
+	 * 查询所有权限
 	 */
-	FIND_ALL("查询所有"),
+	FIND_ALL("查询所有权限"),
 
 	/**
-	 * 查找菜单树
+	 * 查询菜单权限树
 	 */
-	FIND_MENU_TREE("查询菜单树"),
+	FIND_MENU_TREE("查询菜单权限树"),
 
 	/**
-	 * findbyid
+	 * 查询单个权限
 	 */
-	FIND_BY_ID("查询单个"),
+	FIND_BY_ID("查询单个权限"),
 
 	/**
-	 * 删除
+	 * 删除权限
 	 */
-	REMOVE("删除"),
+	REMOVE("删除权限"),
 
 	/**
-	 * 查找按钮和API
+	 * 查询按钮根据父ID
 	 */
-	FIND_BUTTON_AND_API("查询按钮和API"),
+	FIND_BUTTON_BY_PARENT_ID("查询按钮根据父ID"),
 
 	/**
-	 * 验证菜单路径
+	 * 验证菜单权限
 	 */
-	VALIDATE_MENU_PATH("验证菜单路径"),
+	VALIDATE_MENU_PATH("验证菜单权限"),
 
 	;
 

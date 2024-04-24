@@ -22,7 +22,7 @@ public enum PmsUserEnum implements BaseEnum {
 	GET_USERS("查询用户列表"),
 
 	/**
-	 * 创建
+	 * 创建用户
 	 */
 	CREATE("创建用户"),
 
@@ -32,32 +32,32 @@ public enum PmsUserEnum implements BaseEnum {
 	UPDATE("更新用户"),
 
 	/**
-	 * 删除
+	 * 删除用户
 	 */
 	REMOVE("删除用户"),
 
 	/**
-	 * 细节
+	 * 查询用户详情
 	 */
 	DETAIL("查询用户详情"),
 
 	/**
-	 * 页面
+	 * 分页查询用户列表
 	 */
 	PAGE("分页查询用户列表"),
 
 	/**
-	 * 更新配置文件
+	 * 更新用户信息
 	 */
 	UPDATE_PROFILE("更新用户信息"),
 
 	/**
-	 * 按用户名查找
+	 * 根据用户名查询用户
 	 */
 	FIND_BY_USERNAME("根据用户名查询用户"),
 
 	/**
-	 * 获取用户配置文件
+	 * 查询用户信息
 	 */
 	GET_USER_PROFILE("查询用户信息"),
 

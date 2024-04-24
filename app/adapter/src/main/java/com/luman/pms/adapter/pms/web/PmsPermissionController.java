@@ -123,7 +123,7 @@ public class PmsPermissionController {
 	 */
 	@GetMapping("/button/{parentId}")
 	public ResultHelper<List<PermissionInfo>> findButtonByParentId(@PathVariable Long parentId) {
-		return webTemplate.execute(PmsPermissionEnum.FIND_BUTTON_AND_API, () -> pmsPermissionManager.findButtonByParentId(parentId));
+		return webTemplate.execute(PmsPermissionEnum.FIND_BUTTON_BY_PARENT_ID, () -> pmsPermissionManager.findButtonByParentId(parentId));
 	}
 
 	/**
