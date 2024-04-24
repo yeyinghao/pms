@@ -1,8 +1,8 @@
 package com.luman.pms.application.pms.exec;
 
 import cn.hutool.core.util.IdUtil;
-import com.luman.pms.application.pms.convert.ProfileConvert;
 import com.luman.pms.application.pms.convert.UserConvert;
+import com.luman.pms.application.pms.exec.trans.PmsTrans;
 import com.luman.pms.client.pms.model.req.AddUserRolesReq;
 import com.luman.pms.client.pms.model.req.RegisterUserReq;
 import com.luman.pms.domain.pms.gateway.PmsProfileGateway;
@@ -44,6 +44,8 @@ public class PmsUserAddExec {
 	 */
 	private final PmsUserRoleGateway pmsUserRoleDataService;
 
+	private final PmsTrans pmsTrans;
+
 	/**
 	 * 注册
 	 *
@@ -60,7 +62,7 @@ public class PmsUserAddExec {
 		pmsUser.setUserCode(getUserCode());
 		pmsUser.setEnable(Boolean.TRUE);
 
-		PmsProfile pmsProfile = ProfileConvert.buildProfile(req.getProfile(), pmsUser.getUserId());
+		PmsProfile pmsProfile = UserConvert.buildProfile(req.getProfile(), pmsUser.getUserId());
 		List<PmsUserRole> userRoleList = UserConvert.buildUserRoles(req.getRoleIds(), pmsUser.getUserId());
 
 		pmsUserDataService.save(pmsUser);
@@ -95,7 +97,6 @@ public class PmsUserAddExec {
 
 		List<PmsUserRole> list = UserConvert.buildUserRoles(req.getRoleIds(), req.getId());
 
-		pmsUserRoleDataService.removeByUserId(pmsUser.getUserId());
-		pmsUserRoleDataService.saveBatch(list);
+		pmsTrans.addRolesByTrans(pmsUser, list);
 	}
 }
