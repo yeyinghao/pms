@@ -64,7 +64,8 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/register")
 	public ResultHelper<Boolean> register(@RequestBody RegisterUserReq req) {
-		return webTemplate.executeSuccess(PmsAuthEnum.REGISTER, () -> pmsUserManager.register(req));
+		webTemplate.execute(PmsAuthEnum.REGISTER, () -> pmsUserManager.register(req));
+		return ResultHelper.success();
 	}
 
 	/**
@@ -95,7 +96,8 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/logout")
 	public ResultHelper<Boolean> logout() {
-		return webTemplate.executeSuccess(PmsAuthEnum.LOGOUT, pmsAuthMapper::logout);
+		webTemplate.execute(PmsAuthEnum.LOGOUT, pmsAuthMapper::logout);
+		return ResultHelper.success();
 	}
 
 	/**
@@ -106,7 +108,8 @@ public class PmsAuthController {
 	@GetMapping("/captcha")
 	@SaIgnore
 	public ResultHelper<Boolean> captcha() {
-		return webTemplate.executeSuccess(PmsAuthEnum.CAPTCHA, pmsAuthMapper::captcha);
+		webTemplate.execute(PmsAuthEnum.CAPTCHA, pmsAuthMapper::captcha);
+		return ResultHelper.success();
 	}
 
 	/**
@@ -117,7 +120,8 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/password")
 	public ResultHelper<Boolean> changePassword(@RequestBody ChangePasswordReq req) {
-		return webTemplate.executeSuccess(PmsAuthEnum.CHANGE_PASSWORD, () -> pmsAuthMapper.changePassword(req));
+		webTemplate.execute(PmsAuthEnum.CHANGE_PASSWORD, () -> pmsAuthMapper.changePassword(req));
+		return ResultHelper.success();
 	}
 
 }

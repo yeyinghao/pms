@@ -47,7 +47,8 @@ public class PmsRoleController {
 	 */
 	@PostMapping
 	public ResultHelper<Boolean> create(@RequestBody CreateRoleReq req) {
-		return webTemplate.executeSuccess(PmsRoleEnum.CREATE, () -> pmsRoleManager.createRole(req));
+		webTemplate.execute(PmsRoleEnum.CREATE, () -> pmsRoleManager.createRole(req));
+		return ResultHelper.success();
 	}
 
 	/**
@@ -58,7 +59,8 @@ public class PmsRoleController {
 	 */
 	@PatchMapping
 	public ResultHelper<Boolean> update(@RequestBody UpdateRoleReq req) {
-		return webTemplate.executeSuccess(PmsRoleEnum.UPDATE, () -> pmsRoleManager.updateRole(req));
+		webTemplate.execute(PmsRoleEnum.UPDATE, () -> pmsRoleManager.updateRole(req));
+		return ResultHelper.success();
 	}
 
 	/**
@@ -80,8 +82,10 @@ public class PmsRoleController {
 	 */
 	@DeleteMapping("/{id}")
 	public ResultHelper<Boolean> remove(@PathVariable Long id) {
-		return webTemplate.executeSuccess(PmsRoleEnum.REMOVE, () -> pmsRoleManager.removeRole(id));
+		webTemplate.execute(PmsRoleEnum.REMOVE, () -> pmsRoleManager.removeRole(id));
+		return ResultHelper.success();
 	}
+
 
 	/**
 	 * 找到所有
@@ -123,7 +127,8 @@ public class PmsRoleController {
 	 */
 	@PostMapping("/permissions/add")
 	public ResultHelper<Boolean> addRolePermissions(@RequestBody AddRolePermissionsReq req) {
-		return webTemplate.executeSuccess(PmsRoleEnum.ADD_ROLE_PERMISSIONS, () -> pmsRoleManager.addRolePermissions(req));
+		webTemplate.execute(PmsRoleEnum.ADD_ROLE_PERMISSIONS, () -> pmsRoleManager.addRolePermissions(req));
+		return ResultHelper.success();
 	}
 
 	/**
@@ -144,7 +149,8 @@ public class PmsRoleController {
 	 */
 	@PatchMapping("/users/add")
 	public ResultHelper<Boolean> addRoleUsers(@RequestBody AddRoleUsersReq req) {
-		return webTemplate.executeSuccess(PmsRoleEnum.ADD_ROLE_USERS, () -> pmsRoleManager.addRoleUsers(req));
+		webTemplate.execute(PmsRoleEnum.ADD_ROLE_USERS, () -> pmsRoleManager.addRoleUsers(req));
+		return ResultHelper.success();
 	}
 
 	/**
@@ -153,7 +159,8 @@ public class PmsRoleController {
 	 */
 	@PatchMapping("/users/remove")
 	public ResultHelper<Boolean> removeRoleUsers(@RequestBody RemoveRoleUsersReq req) {
-		return webTemplate.executeSuccess(PmsRoleEnum.REMOVE_ROLE_USERS, () -> pmsRoleManager.removeRoleUsers(req));
+		webTemplate.execute(PmsRoleEnum.REMOVE_ROLE_USERS, () -> pmsRoleManager.removeRoleUsers(req));
+		return ResultHelper.success();
 	}
 
 }

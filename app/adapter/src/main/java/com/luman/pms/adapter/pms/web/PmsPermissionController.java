@@ -48,7 +48,8 @@ public class PmsPermissionController {
 	 */
 	@PostMapping
 	public ResultHelper<Boolean> create(@RequestBody CreatePermissionReq req) {
-		return webTemplate.executeSuccess(PmsPermissionEnum.CREATE, () -> pmsPermissionManager.create(req));
+		webTemplate.execute(PmsPermissionEnum.CREATE, () -> pmsPermissionManager.create(req));
+		return ResultHelper.success();
 	}
 
 	/**
@@ -59,7 +60,8 @@ public class PmsPermissionController {
 	 */
 	@PostMapping("/batch")
 	public ResultHelper<Boolean> batchCreate(@RequestBody List<CreatePermissionReq> reqs) {
-		return webTemplate.executeSuccess(PmsPermissionEnum.BATCH_CREATE, () -> pmsPermissionManager.createBatch(reqs));
+		webTemplate.execute(PmsPermissionEnum.BATCH_CREATE, () -> pmsPermissionManager.createBatch(reqs));
+		return ResultHelper.success();
 	}
 
 	/**
@@ -101,7 +103,8 @@ public class PmsPermissionController {
 	 */
 	@PatchMapping
 	public ResultHelper<Boolean> update(@RequestBody UpdatePermissionReq req) {
-		return webTemplate.executeSuccess(PmsPermissionEnum.UPDATE, () -> pmsPermissionManager.updateById(req));
+		webTemplate.execute(PmsPermissionEnum.UPDATE, () -> pmsPermissionManager.updateById(req));
+		return ResultHelper.success();
 	}
 
 	/**
@@ -112,7 +115,8 @@ public class PmsPermissionController {
 	 */
 	@DeleteMapping("/{id}")
 	public ResultHelper<Boolean> remove(@PathVariable Long id) {
-		return webTemplate.executeSuccess(PmsPermissionEnum.REMOVE, () -> pmsPermissionManager.remove(id));
+		webTemplate.execute(PmsPermissionEnum.REMOVE, () -> pmsPermissionManager.remove(id));
+		return ResultHelper.success();
 	}
 
 	/**
@@ -134,7 +138,8 @@ public class PmsPermissionController {
 	 */
 	@GetMapping("/menu/validate")
 	public ResultHelper<Boolean> validateMenuPath(String path) {
-		return webTemplate.executeSuccess(PmsPermissionEnum.VALIDATE_MENU_PATH, () -> pmsPermissionManager.validateMenuPath(path));
+		webTemplate.execute(PmsPermissionEnum.VALIDATE_MENU_PATH, () -> pmsPermissionManager.validateMenuPath(path));
+		return ResultHelper.success();
 	}
 
 }
