@@ -100,4 +100,11 @@ public interface PmsRoleManager {
 	 * @param req 请求
 	 */
 	void removeRoleUsers(RemoveRoleUsersReq req);
+
+	/**
+	 * 更新角色状态
+	 *
+	 * @param req 请求
+	 */
+	void updateRoleStatus(UpdateRoleStatusReq req);
 }

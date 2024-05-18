@@ -4,6 +4,7 @@ import com.luman.pms.domain.pms.enums.PermissionTypeEnum;
 import com.luman.pms.domain.pms.gateway.PmsPermissionGateway;
 import com.luman.pms.domain.pms.model.PmsPermission;
 import com.luman.pms.infrastructure.pms.dataobject.PmsPermissionPO;
+import com.luman.pms.infrastructure.pms.mapper.PmsPermissionMapper;
 import com.luman.smy.common.util.CopyUtil;
 import com.luman.smy.dal.gateway.GatewayImpl;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.List;
  * @date 2024/04/14
  */
 @Service
-public class PmsPermissionGatewayImpl extends GatewayImpl<PmsPermissionPO, PmsPermission> implements PmsPermissionGateway {
+public class PmsPermissionGatewayImpl extends GatewayImpl<PmsPermissionPO, PmsPermission, PmsPermissionMapper> implements PmsPermissionGateway {
 
 	@Override
 	public PmsPermission convertToDO(PmsPermissionPO po) {

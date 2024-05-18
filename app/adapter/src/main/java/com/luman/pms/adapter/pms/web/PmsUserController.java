@@ -11,10 +11,12 @@ import com.luman.pms.client.pms.api.PmsUserManager;
 import com.luman.pms.client.pms.model.info.UserDetailInfo;
 import com.luman.pms.client.pms.model.info.UserPageInfo;
 import com.luman.pms.client.pms.model.req.*;
+import com.luman.smy.common.constant.LoggerConstant;
 import com.luman.smy.common.helper.ResultHelper;
 import com.luman.smy.common.model.PageRes;
-import com.luman.smy.common.template.WebTemplate;
+import com.luman.smy.common.template.ExecuteTemplate;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 @RestController
 @RequiredArgsConstructor
+@Slf4j(topic = LoggerConstant.WEB_MONITOR_LOGGER)
 public class PmsUserController {
 
 	/**
@@ -36,7 +39,7 @@ public class PmsUserController {
 	/**
 	 * 网页模板
 	 */
-	private final WebTemplate webTemplate;
+	private final ExecuteTemplate executeTemplate;
 
 	/**
 	 * 创建
@@ -46,7 +49,7 @@ public class PmsUserController {
 	 */
 	@PostMapping
 	public ResultHelper<Boolean> create(@RequestBody RegisterUserReq req) {
-		webTemplate.execute(PmsEnum.USER_CREATE, () -> pmsUserManager.register(req));
+		executeTemplate.execute(log, PmsEnum.USER_CREATE, () -> pmsUserManager.register(req));
 		return ResultHelper.success();
 	}
 
@@ -58,7 +61,7 @@ public class PmsUserController {
 	 */
 	@PatchMapping
 	public ResultHelper<Boolean> update(@RequestBody UpdateUserReq req) {
-		webTemplate.execute(PmsEnum.USER_UPDATE, () -> pmsUserManager.update(req));
+		executeTemplate.execute(log, PmsEnum.USER_UPDATE, () -> pmsUserManager.update(req));
 		return ResultHelper.success();
 	}
 
@@ -70,7 +73,7 @@ public class PmsUserController {
 	 */
 	@DeleteMapping("/{id}")
 	public ResultHelper<Boolean> remove(@PathVariable Long id) {
-		webTemplate.execute(PmsEnum.USER_REMOVE, () -> pmsUserManager.removeUser(id));
+		executeTemplate.execute(log, PmsEnum.USER_REMOVE, () -> pmsUserManager.removeUser(id));
 		return ResultHelper.success();
 	}
 
@@ -81,7 +84,8 @@ public class PmsUserController {
 	 */
 	@GetMapping("/detail")
 	public ResultHelper<UserDetailInfo> detail() {
-		return webTemplate.execute(PmsEnum.USER_DETAIL, pmsUserManager::detail);
+		UserDetailInfo res = executeTemplate.execute(log, PmsEnum.USER_DETAIL, pmsUserManager::detail);
+		return ResultHelper.of(res);
 	}
 
 	/**
@@ -92,8 +96,10 @@ public class PmsUserController {
 	 */
 	@PostMapping("/page")
 	public ResultHelper<PageRes<UserPageInfo>> page(@RequestBody UserPageReq req) {
-		return webTemplate.execute(PmsEnum.USER_PAGE, () -> pmsUserManager.queryPage(req));
+		PageRes<UserPageInfo> res = executeTemplate.execute(log, PmsEnum.USER_PAGE, () -> pmsUserManager.queryPage(req));
+		return ResultHelper.of(res);
 	}
+
 
 	/**
 	 * 更新配置文件
@@ -103,7 +109,7 @@ public class PmsUserController {
 	 */
 	@PatchMapping("/profile")
 	public ResultHelper<Boolean> updateProfile(@RequestBody UpdateProfileReq req) {
-		webTemplate.execute(PmsEnum.USER_UPDATE_PROFILE, () -> pmsUserManager.updateProfile(req));
+		executeTemplate.execute(log, PmsEnum.USER_UPDATE_PROFILE, () -> pmsUserManager.updateProfile(req));
 		return ResultHelper.success();
 	}
 
@@ -115,7 +121,7 @@ public class PmsUserController {
 	 */
 	@GetMapping("/{userName}")
 	public ResultHelper<Boolean> findByUsername(@PathVariable String userName) {
-		webTemplate.execute(PmsEnum.USER_FIND_BY_USERNAME, () -> {
+		executeTemplate.execute(log, PmsEnum.USER_FIND_BY_USERNAME, () -> {
 		});
 		return ResultHelper.success();
 	}
@@ -128,7 +134,7 @@ public class PmsUserController {
 	 */
 	@GetMapping("/profile/{id}")
 	public ResultHelper<Boolean> getUserProfile(@PathVariable Long id) {
-		webTemplate.execute(PmsEnum.USER_GET_USER_PROFILE, () -> {
+		executeTemplate.execute(log, PmsEnum.USER_GET_USER_PROFILE, () -> {
 		});
 		return ResultHelper.success();
 	}
@@ -141,7 +147,7 @@ public class PmsUserController {
 	 */
 	@PostMapping("/roles/add")
 	public ResultHelper<Boolean> addRoles(@RequestBody AddUserRolesReq req) {
-		webTemplate.execute(PmsEnum.USER_ADD_ROLES, () -> pmsUserManager.addRoles(req));
+		executeTemplate.execute(log, PmsEnum.USER_ADD_ROLES, () -> pmsUserManager.addRoles(req));
 		return ResultHelper.success();
 	}
 
@@ -153,7 +159,7 @@ public class PmsUserController {
 	 */
 	@PatchMapping("/password/reset")
 	public ResultHelper<Boolean> resetPassword(@RequestBody UpdatePasswordReq req) {
-		webTemplate.execute(PmsEnum.USER_RESET_PASSWORD, () -> pmsUserManager.resetPassword(req));
+		executeTemplate.execute(log, PmsEnum.USER_RESET_PASSWORD, () -> pmsUserManager.resetPassword(req));
 		return ResultHelper.success();
 	}
 

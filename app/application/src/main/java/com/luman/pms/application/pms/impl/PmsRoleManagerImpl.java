@@ -94,4 +94,9 @@ public class PmsRoleManagerImpl implements PmsRoleManager {
 	public void removeRoleUsers(RemoveRoleUsersReq req) {
 		pmsRoleExec.removeRoleUsers(req);
 	}
+
+	@Override
+	public void updateRoleStatus(UpdateRoleStatusReq req) {
+		pmsRoleExec.updateRoleStatus(req);
+	}
 }

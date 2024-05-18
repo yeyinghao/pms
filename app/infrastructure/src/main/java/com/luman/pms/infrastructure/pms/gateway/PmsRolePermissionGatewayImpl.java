@@ -3,6 +3,7 @@ package com.luman.pms.infrastructure.pms.gateway;
 import com.luman.pms.domain.pms.gateway.PmsRolePermissionGateway;
 import com.luman.pms.domain.pms.model.PmsRolePermission;
 import com.luman.pms.infrastructure.pms.dataobject.PmsRolePermissionPO;
+import com.luman.pms.infrastructure.pms.mapper.PmsRolePermissionMapper;
 import com.luman.smy.common.util.CopyUtil;
 import com.luman.smy.dal.gateway.GatewayImpl;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.List;
  * @date 2024/04/14
  */
 @Service
-public class PmsRolePermissionGatewayImpl extends GatewayImpl<PmsRolePermissionPO, PmsRolePermission> implements PmsRolePermissionGateway {
+public class PmsRolePermissionGatewayImpl extends GatewayImpl<PmsRolePermissionPO, PmsRolePermission, PmsRolePermissionMapper> implements PmsRolePermissionGateway {
 
 	@Override
 	public PmsRolePermission convertToDO(PmsRolePermissionPO po) {

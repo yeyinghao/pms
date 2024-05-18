@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Pms用户添加执行
@@ -68,10 +67,7 @@ public class PmsUserExec {
 
 		PmsProfile pmsProfile = UserConvert.buildProfile(req.getProfile(), pmsUser.getUserId());
 		List<PmsUserRole> userRoleList = UserConvert.buildUserRoles(req.getRoleIds(), pmsUser.getUserId());
-
-		pmsUserDataService.save(pmsUser);
-		pmsProfileDataService.save(pmsProfile);
-		pmsUserRoleDataService.saveBatch(userRoleList);
+		pmsTrans.registerByTrans(pmsUser, pmsProfile, userRoleList);
 	}
 
 	/**
@@ -95,12 +91,9 @@ public class PmsUserExec {
 	 * @param req 请求
 	 */
 	public void addRoles(AddUserRolesReq req) {
-
 		PmsUser pmsUser = pmsUserDataService.findById(req.getId());
 		Assert.isNull(pmsUser, CommErrorEnum.BIZ_ERROR, "用户不存在");
-
 		List<PmsUserRole> list = UserConvert.buildUserRoles(req.getRoleIds(), req.getId());
-
 		pmsTrans.addRolesByTrans(pmsUser, list);
 	}
 
@@ -110,10 +103,9 @@ public class PmsUserExec {
 	 * @param id id
 	 */
 	public void removeUser(Long id) {
-		Assert.isTrue(Objects.equals(UserTokenUtil.getId(), id), CommErrorEnum.BIZ_ERROR, "用户Id不匹配");
 		PmsUser pmsUser = pmsUserDataService.findById(id);
-		pmsUserDataService.deleteById(pmsUser.getId());
-		pmsProfileDataService.deleteByUserId(id);
+		Assert.notNull(pmsUser, CommErrorEnum.BIZ_ERROR, "用户不存在");
+		pmsTrans.removeUserByTrans(pmsUser);
 	}
 
 	/**

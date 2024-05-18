@@ -127,6 +127,11 @@ public enum PmsEnum implements BaseEnum {
 	ROLE_UPDATE("更新角色"),
 
 	/**
+	 * 更新角色状态
+	 */
+	ROLE_UPDATE_STATUS("更新角色状态"),
+
+	/**
 	 * 查询单个角色
 	 */
 	ROLE_FIND_BY_ID("查询单个角色"),

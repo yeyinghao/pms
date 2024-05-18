@@ -3,6 +3,7 @@ package com.luman.pms.application.pms.exec;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.IdUtil;
 import com.luman.pms.application.pms.convert.RoleConvert;
+import com.luman.pms.application.pms.exec.trans.PmsTrans;
 import com.luman.pms.client.pms.model.req.*;
 import com.luman.pms.domain.pms.gateway.PmsRoleGateway;
 import com.luman.pms.domain.pms.gateway.PmsRolePermissionGateway;
@@ -43,6 +44,8 @@ public class PmsRoleExec {
 	 */
 	private final PmsRolePermissionGateway pmsRolePermissionDataService;
 
+	private final PmsTrans pmsTrans;
+
 	/**
 	 * 创建角色
 	 *
@@ -50,18 +53,15 @@ public class PmsRoleExec {
 	 */
 	public void createRole(CreateRoleReq req) {
 		PmsRole pmsRole = pmsRoleDataService.findByCodeOrName(req.getCode(), req.getName());
-		Assert.notNull(pmsRole, CommErrorEnum.BIZ_ERROR);
+		Assert.isNull(pmsRole, CommErrorEnum.BIZ_ERROR, "角色已存在");
 		pmsRole = new PmsRole();
 		pmsRole.setRoleId(IdUtil.getSnowflakeNextId());
 		pmsRole.setCode(req.getCode());
 		pmsRole.setName(req.getName());
 		pmsRole.setEnable(Boolean.TRUE);
 		pmsRole.setStatus(Boolean.TRUE);
-
 		List<PmsRolePermission> pmsRolePermissions = RoleConvert.buildRolePermissions(pmsRole.getRoleId(), req.getPermissionIds());
-
-		pmsRoleDataService.save(pmsRole);
-		pmsRolePermissionDataService.saveBatch(pmsRolePermissions);
+		pmsTrans.createRoleByTrans(pmsRole, pmsRolePermissions);
 	}
 
 	/**
@@ -104,10 +104,7 @@ public class PmsRoleExec {
 	 */
 	public void removeRole(Long id) {
 		PmsRole pmsRole = pmsRoleDataService.findById(id);
-
-		pmsRoleDataService.deleteById(id);
-		pmsRolePermissionDataService.removeByRoleId(pmsRole.getRoleId());
-		pmsUserRoleDataService.removeByRoleId(pmsRole.getRoleId());
+		pmsTrans.removeRoleByTrans(pmsRole);
 	}
 
 	/**
@@ -130,11 +127,18 @@ public class PmsRoleExec {
 		pmsRole.setCode(req.getCode());
 		pmsRole.setName(req.getName());
 		pmsRole.setEnable(req.getEnable());
-		pmsRoleDataService.updateById(pmsRole);
-
 		List<PmsRolePermission> pmsRolePermissions = RoleConvert.buildRolePermissions(pmsRole.getId(), req.getPermissionIds());
+		pmsTrans.updateRoleByTrans(pmsRole, pmsRolePermissions);
+	}
 
-		pmsRolePermissionDataService.removeByRoleId(pmsRole.getRoleId());
-		pmsRolePermissionDataService.saveBatch(pmsRolePermissions);
+	/**
+	 * 更新角色状态
+	 *
+	 * @param req 请求
+	 */
+	public void updateRoleStatus(UpdateRoleStatusReq req) {
+		PmsRole pmsRole = pmsRoleDataService.findById(req.getId());
+		pmsRole.setEnable(req.getEnable());
+		pmsRoleDataService.updateById(pmsRole);
 	}
 }

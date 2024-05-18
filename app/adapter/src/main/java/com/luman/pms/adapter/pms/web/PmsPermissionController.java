@@ -12,9 +12,11 @@ import com.luman.pms.client.pms.model.info.PermissionInfo;
 import com.luman.pms.client.pms.model.req.CreatePermissionReq;
 import com.luman.pms.client.pms.model.req.UpdatePermissionReq;
 import com.luman.pms.domain.pms.model.PmsPermission;
+import com.luman.smy.common.constant.LoggerConstant;
 import com.luman.smy.common.helper.ResultHelper;
-import com.luman.smy.common.template.WebTemplate;
+import com.luman.smy.common.template.ExecuteTemplate;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +30,7 @@ import java.util.List;
 @RequestMapping("/api/permission")
 @RestController
 @RequiredArgsConstructor
+@Slf4j(topic = LoggerConstant.WEB_MONITOR_LOGGER)
 public class PmsPermissionController {
 
 	/**
@@ -38,7 +41,7 @@ public class PmsPermissionController {
 	/**
 	 * Web模板
 	 */
-	private final WebTemplate webTemplate;
+	private final ExecuteTemplate executeTemplate;
 
 	/**
 	 * 创建
@@ -48,7 +51,7 @@ public class PmsPermissionController {
 	 */
 	@PostMapping
 	public ResultHelper<Boolean> create(@RequestBody CreatePermissionReq req) {
-		webTemplate.execute(PmsEnum.PERMISSION_CREATE, () -> pmsPermissionManager.create(req));
+		executeTemplate.execute(log, PmsEnum.PERMISSION_CREATE, () -> pmsPermissionManager.create(req));
 		return ResultHelper.success();
 	}
 
@@ -60,7 +63,7 @@ public class PmsPermissionController {
 	 */
 	@PostMapping("/batch")
 	public ResultHelper<Boolean> batchCreate(@RequestBody List<CreatePermissionReq> reqs) {
-		webTemplate.execute(PmsEnum.PERMISSION_BATCH_CREATE, () -> pmsPermissionManager.createBatch(reqs));
+		executeTemplate.execute(log, PmsEnum.PERMISSION_BATCH_CREATE, () -> pmsPermissionManager.createBatch(reqs));
 		return ResultHelper.success();
 	}
 
@@ -71,7 +74,8 @@ public class PmsPermissionController {
 	 */
 	@GetMapping
 	public ResultHelper<List<PermissionInfo>> findAll() {
-		return webTemplate.execute(PmsEnum.PERMISSION_FIND_ALL, pmsPermissionManager::findAllMenu);
+		List<PermissionInfo> res = executeTemplate.execute(log, PmsEnum.PERMISSION_FIND_ALL, pmsPermissionManager::findAllMenu);
+		return ResultHelper.of(res);
 	}
 
 	/**
@@ -81,7 +85,8 @@ public class PmsPermissionController {
 	 */
 	@GetMapping("menu/tree")
 	public ResultHelper<List<Tree<Long>>> findMenuTree() {
-		return webTemplate.execute(PmsEnum.PERMISSION_FIND_MENU_TREE, pmsPermissionManager::findAllMenuTree);
+		List<Tree<Long>> res = executeTemplate.execute(log, PmsEnum.PERMISSION_FIND_MENU_TREE, pmsPermissionManager::findAllMenuTree);
+		return ResultHelper.of(res);
 	}
 
 	/**
@@ -92,7 +97,8 @@ public class PmsPermissionController {
 	 */
 	@GetMapping("/{id}")
 	public ResultHelper<PermissionInfo> findById(@PathVariable Long id) {
-		return webTemplate.execute(PmsEnum.PERMISSION_FIND_BY_ID, () -> pmsPermissionManager.findById(id));
+		PermissionInfo res = executeTemplate.execute(log, PmsEnum.PERMISSION_FIND_BY_ID, () -> pmsPermissionManager.findById(id));
+		return ResultHelper.of(res);
 	}
 
 	/**
@@ -103,7 +109,7 @@ public class PmsPermissionController {
 	 */
 	@PatchMapping
 	public ResultHelper<Boolean> update(@RequestBody UpdatePermissionReq req) {
-		webTemplate.execute(PmsEnum.PERMISSION_UPDATE, () -> pmsPermissionManager.updateById(req));
+		executeTemplate.execute(log, PmsEnum.PERMISSION_UPDATE, () -> pmsPermissionManager.updateById(req));
 		return ResultHelper.success();
 	}
 
@@ -115,7 +121,7 @@ public class PmsPermissionController {
 	 */
 	@DeleteMapping("/{id}")
 	public ResultHelper<Boolean> remove(@PathVariable Long id) {
-		webTemplate.execute(PmsEnum.PERMISSION_REMOVE, () -> pmsPermissionManager.remove(id));
+		executeTemplate.execute(log, PmsEnum.PERMISSION_REMOVE, () -> pmsPermissionManager.remove(id));
 		return ResultHelper.success();
 	}
 
@@ -127,7 +133,8 @@ public class PmsPermissionController {
 	 */
 	@GetMapping("/button/{parentId}")
 	public ResultHelper<List<PermissionInfo>> findButtonByParentId(@PathVariable Long parentId) {
-		return webTemplate.execute(PmsEnum.PERMISSION_FIND_BUTTON_BY_PARENT_ID, () -> pmsPermissionManager.findButtonByParentId(parentId));
+		List<PermissionInfo> res = executeTemplate.execute(log, PmsEnum.PERMISSION_FIND_BUTTON_BY_PARENT_ID, () -> pmsPermissionManager.findButtonByParentId(parentId));
+		return ResultHelper.of(res);
 	}
 
 	/**
@@ -138,7 +145,7 @@ public class PmsPermissionController {
 	 */
 	@GetMapping("/menu/validate")
 	public ResultHelper<Boolean> validateMenuPath(String path) {
-		webTemplate.execute(PmsEnum.PERMISSION_VALIDATE_MENU_PATH, () -> pmsPermissionManager.validateMenuPath(path));
+		executeTemplate.execute(log, PmsEnum.PERMISSION_VALIDATE_MENU_PATH, () -> pmsPermissionManager.validateMenuPath(path));
 		return ResultHelper.success();
 	}
 

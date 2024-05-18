@@ -3,6 +3,7 @@ package com.luman.pms.infrastructure.pms.gateway;
 import com.luman.pms.domain.pms.gateway.PmsUserGateway;
 import com.luman.pms.domain.pms.model.PmsUser;
 import com.luman.pms.infrastructure.pms.dataobject.PmsUserPO;
+import com.luman.pms.infrastructure.pms.mapper.PmsUserMapper;
 import com.luman.smy.common.util.CopyUtil;
 import com.luman.smy.dal.gateway.GatewayImpl;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @date 2024/04/14
  */
 @Service
-public class PmsUserGatewayImpl extends GatewayImpl<PmsUserPO, PmsUser> implements PmsUserGateway {
+public class PmsUserGatewayImpl extends GatewayImpl<PmsUserPO, PmsUser, PmsUserMapper> implements PmsUserGateway {
 
 	@Override
 	public PmsUser convertToDO(PmsUserPO po) {
