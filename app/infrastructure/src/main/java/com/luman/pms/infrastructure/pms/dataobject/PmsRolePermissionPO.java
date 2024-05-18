@@ -17,12 +17,12 @@ import lombok.EqualsAndHashCode;
 public class PmsRolePermissionPO extends BasePO {
 
 	/**
-	 * roleBizId
+	 * 角色id
 	 */
 	private Long roleId;
 
 	/**
-	 * permissionBizId
+	 * 权限id
 	 */
 	private Long permissionId;
 

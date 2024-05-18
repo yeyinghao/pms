@@ -8,7 +8,7 @@ package com.luman.pms.application.pms.impl;
 import cn.dev33.satoken.stp.StpUtil;
 import com.luman.pms.application.pms.exec.CaptchaCreateExec;
 import com.luman.pms.application.pms.exec.PmsAuthTokenExec;
-import com.luman.pms.application.pms.exec.PmsUserUpdateExec;
+import com.luman.pms.application.pms.exec.PmsUserExec;
 import com.luman.pms.client.pms.api.PmsAuthManager;
 import com.luman.pms.client.pms.model.req.ChangePasswordReq;
 import com.luman.pms.client.pms.model.req.LoginReq;
@@ -30,7 +30,7 @@ public class PmsAuthManagerImpl implements PmsAuthManager {
 	/**
 	 * Pms用户更新执行
 	 */
-	private final PmsUserUpdateExec pmsUserUpdateExec;
+	private final PmsUserExec pmsUserExec;
 
 	/**
 	 * Pms身份验证令牌执行
@@ -69,6 +69,6 @@ public class PmsAuthManagerImpl implements PmsAuthManager {
 
 	@Override
 	public void changePassword(ChangePasswordReq req) {
-		pmsUserUpdateExec.changePassword(req);
+		pmsUserExec.changePassword(req);
 	}
 }

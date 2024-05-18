@@ -6,9 +6,7 @@
 package com.luman.pms.application.pms.impl;
 
 import cn.hutool.core.lang.tree.Tree;
-import com.luman.pms.application.pms.exec.PmsPermissionAddExec;
-import com.luman.pms.application.pms.exec.PmsPermissionDeleteExec;
-import com.luman.pms.application.pms.exec.PmsPermissionUpdateExec;
+import com.luman.pms.application.pms.exec.PmsPermissionExec;
 import com.luman.pms.application.pms.exec.qry.PmsPermissionQryExec;
 import com.luman.pms.client.pms.api.PmsPermissionManager;
 import com.luman.pms.client.pms.model.info.PermissionInfo;
@@ -32,17 +30,7 @@ public class PmsPermissionManagerImpl implements PmsPermissionManager {
 	/**
 	 * Pms权限添加执行
 	 */
-	private final PmsPermissionAddExec pmsPermissionAddExec;
-
-	/**
-	 * Pms权限删除执行
-	 */
-	private final PmsPermissionDeleteExec pmsPermissionDeleteExec;
-
-	/**
-	 * Pms权限更新执行
-	 */
-	private final PmsPermissionUpdateExec pmsPermissionUpdateExec;
+	private final PmsPermissionExec permissionExec;
 
 	/**
 	 * Pms权限qry执行
@@ -51,12 +39,12 @@ public class PmsPermissionManagerImpl implements PmsPermissionManager {
 
 	@Override
 	public void create(CreatePermissionReq req) {
-		 pmsPermissionAddExec.create(req);
+		 permissionExec.create(req);
 	}
 
 	@Override
 	public void createBatch(List<CreatePermissionReq> reqs) {
-		 pmsPermissionAddExec.createBatch(reqs);
+		 permissionExec.createBatch(reqs);
 	}
 
 	@Override
@@ -86,11 +74,11 @@ public class PmsPermissionManagerImpl implements PmsPermissionManager {
 
 	@Override
 	public void updateById(UpdatePermissionReq req) {
-		 pmsPermissionUpdateExec.updateById(req);
+		permissionExec.updateById(req);
 	}
 
 	@Override
 	public void remove(Long id) {
-		 pmsPermissionDeleteExec.remove(id);
+		permissionExec.remove(id);
 	}
 }

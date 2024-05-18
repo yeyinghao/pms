@@ -3,9 +3,7 @@ package com.luman.pms.application.pms.exec;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.IdUtil;
 import com.luman.pms.application.pms.convert.RoleConvert;
-import com.luman.pms.client.pms.model.req.AddRolePermissionsReq;
-import com.luman.pms.client.pms.model.req.AddRoleUsersReq;
-import com.luman.pms.client.pms.model.req.CreateRoleReq;
+import com.luman.pms.client.pms.model.req.*;
 import com.luman.pms.domain.pms.gateway.PmsRoleGateway;
 import com.luman.pms.domain.pms.gateway.PmsRolePermissionGateway;
 import com.luman.pms.domain.pms.gateway.PmsUserRoleGateway;
@@ -28,7 +26,7 @@ import java.util.stream.Collectors;
  */
 @Component
 @RequiredArgsConstructor
-public class PmsRoleAddExec {
+public class PmsRoleExec {
 
 	/**
 	 * Pms角色数据服务
@@ -97,5 +95,46 @@ public class PmsRoleAddExec {
 			return userRole;
 		}).collect(Collectors.toList());
 		pmsUserRoleDataService.saveBatch(permissionList);
+	}
+
+	/**
+	 * 删除角色
+	 *
+	 * @param id id
+	 */
+	public void removeRole(Long id) {
+		PmsRole pmsRole = pmsRoleDataService.findById(id);
+
+		pmsRoleDataService.deleteById(id);
+		pmsRolePermissionDataService.removeByRoleId(pmsRole.getRoleId());
+		pmsUserRoleDataService.removeByRoleId(pmsRole.getRoleId());
+	}
+
+	/**
+	 * 删除角色用户
+	 *
+	 * @param req 请求
+	 */
+	public void removeRoleUsers(RemoveRoleUsersReq req) {
+		PmsRole pmsRole = pmsRoleDataService.findById(req.getId());
+		pmsUserRoleDataService.removeRoleIdAndUserIds(pmsRole.getRoleId(), req.getUserIds());
+	}
+
+	/**
+	 * 更新作用
+	 *
+	 * @param req 请求
+	 */
+	public void updateRole(UpdateRoleReq req) {
+		PmsRole pmsRole = pmsRoleDataService.findById(req.getId());
+		pmsRole.setCode(req.getCode());
+		pmsRole.setName(req.getName());
+		pmsRole.setEnable(req.getEnable());
+		pmsRoleDataService.updateById(pmsRole);
+
+		List<PmsRolePermission> pmsRolePermissions = RoleConvert.buildRolePermissions(pmsRole.getId(), req.getPermissionIds());
+
+		pmsRolePermissionDataService.removeByRoleId(pmsRole.getRoleId());
+		pmsRolePermissionDataService.saveBatch(pmsRolePermissions);
 	}
 }

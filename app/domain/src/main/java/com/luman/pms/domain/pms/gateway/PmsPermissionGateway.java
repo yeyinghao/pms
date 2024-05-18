@@ -14,10 +14,29 @@ import java.util.List;
  */
 public interface PmsPermissionGateway extends Gateway<PmsPermission> {
 
+	/**
+	 * 验证菜单路径
+	 *
+	 * @param path 路径
+	 * @return {@link Boolean }
+	 */
 	Boolean validateMenuPath(String path);
 
+	/**
+	 * 找到按钮通过家长id
+	 *
+	 * @param parentId       家长id
+	 * @param permissionType 权限类型
+	 * @return {@link List }<{@link PmsPermission }>
+	 */
 	List<PmsPermission> findButtonByParentId(Long parentId, PermissionTypeEnum permissionType);
 
+	/**
+	 * 查找所有菜单
+	 *
+	 * @param permissionType 权限类型
+	 * @return {@link List }<{@link PmsPermission }>
+	 */
 	List<PmsPermission> findAllMenu(PermissionTypeEnum permissionType);
 
 }

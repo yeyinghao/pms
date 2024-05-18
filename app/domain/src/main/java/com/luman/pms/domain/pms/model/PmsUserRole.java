@@ -19,12 +19,12 @@ import lombok.NoArgsConstructor;
 public class PmsUserRole extends BaseDP {
 
 	/**
-	 * userBizId
+	 * 用户id
 	 */
 	private Long userId;
 
 	/**
-	 * roleBizId
+	 * 角色id
 	 */
 	private Long roleId;
 

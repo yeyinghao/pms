@@ -2,6 +2,7 @@ package com.luman.pms.application.pms.exec;
 
 import cn.hutool.core.util.IdUtil;
 import com.luman.pms.client.pms.model.req.CreatePermissionReq;
+import com.luman.pms.client.pms.model.req.UpdatePermissionReq;
 import com.luman.pms.domain.pms.gateway.PmsPermissionGateway;
 import com.luman.pms.domain.pms.model.PmsPermission;
 import com.luman.smy.common.util.CopyUtil;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 @Component
 @RequiredArgsConstructor
-public class PmsPermissionAddExec {
+public class PmsPermissionExec {
 
 	/**
 	 * Pms权限数据服务
@@ -46,5 +47,24 @@ public class PmsPermissionAddExec {
 	public void createBatch(List<CreatePermissionReq> reqs) {
 		List<PmsPermission> pmsPermissions = CopyUtil.copyList(reqs, PmsPermission::new);
 		pmsPermissionDataService.saveBatch(pmsPermissions);
+	}
+
+	/**
+	 * 更新由id
+	 *
+	 * @param req 请求
+	 */
+	public void updateById(UpdatePermissionReq req) {
+		PmsPermission pmsPermission = CopyUtil.copy(req, PmsPermission::new);
+		pmsPermissionDataService.updateById(pmsPermission);
+	}
+
+	/**
+	 * 删除
+	 *
+	 * @param id id
+	 */
+	public void remove(Long id) {
+		pmsPermissionDataService.deleteById(id);
 	}
 }
