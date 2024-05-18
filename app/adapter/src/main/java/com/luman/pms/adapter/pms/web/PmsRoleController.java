@@ -12,12 +12,10 @@ import com.luman.pms.client.pms.model.info.PermissionInfo;
 import com.luman.pms.client.pms.model.info.RoleInfo;
 import com.luman.pms.client.pms.model.info.RolePageInfo;
 import com.luman.pms.client.pms.model.req.*;
-import com.luman.smy.common.constant.LoggerConstant;
 import com.luman.smy.common.helper.ResultHelper;
 import com.luman.smy.common.model.PageRes;
 import com.luman.smy.common.template.ExecuteTemplate;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +29,6 @@ import java.util.List;
 @RequestMapping("/api/role")
 @RestController
 @RequiredArgsConstructor
-@Slf4j(topic = LoggerConstant.WEB_MONITOR_LOGGER)
 public class PmsRoleController {
 
 	/**
@@ -42,8 +39,7 @@ public class PmsRoleController {
 	/**
 	 * 网页模板
 	 */
-	private final ExecuteTemplate executeTemplate;
-
+	private final ExecuteTemplate webExecuteTemplate;
 
 	/**
 	 * 创建
@@ -53,7 +49,7 @@ public class PmsRoleController {
 	 */
 	@PostMapping
 	public ResultHelper<Boolean> create(@RequestBody CreateRoleReq req) {
-		executeTemplate.execute(log, PmsEnum.ROLE_CREATE, () -> pmsRoleManager.createRole(req));
+		webExecuteTemplate.execute(PmsEnum.ROLE_CREATE, () -> pmsRoleManager.createRole(req));
 		return ResultHelper.success();
 	}
 
@@ -65,7 +61,7 @@ public class PmsRoleController {
 	 */
 	@PatchMapping
 	public ResultHelper<Boolean> update(@RequestBody UpdateRoleReq req) {
-		executeTemplate.execute(log, PmsEnum.ROLE_UPDATE, () -> pmsRoleManager.updateRole(req));
+		webExecuteTemplate.execute(PmsEnum.ROLE_UPDATE, () -> pmsRoleManager.updateRole(req));
 		return ResultHelper.success();
 	}
 
@@ -77,7 +73,7 @@ public class PmsRoleController {
 	 */
 	@GetMapping("/{id}")
 	public ResultHelper<RoleInfo> findById(@PathVariable Long id) {
-		RoleInfo res = executeTemplate.execute(log, PmsEnum.ROLE_FIND_BY_ID, () -> pmsRoleManager.findById(id));
+		RoleInfo res = webExecuteTemplate.execute(PmsEnum.ROLE_FIND_BY_ID, () -> pmsRoleManager.findById(id));
 		return ResultHelper.of(res);
 	}
 
@@ -89,7 +85,7 @@ public class PmsRoleController {
 	 */
 	@DeleteMapping("/{id}")
 	public ResultHelper<Boolean> remove(@PathVariable Long id) {
-		executeTemplate.execute(log, PmsEnum.ROLE_REMOVE, () -> pmsRoleManager.removeRole(id));
+		webExecuteTemplate.execute(PmsEnum.ROLE_REMOVE, () -> pmsRoleManager.removeRole(id));
 		return ResultHelper.success();
 	}
 
@@ -101,7 +97,7 @@ public class PmsRoleController {
 	 */
 	@PatchMapping("/status")
 	public ResultHelper<Boolean> updateStatus(@RequestBody UpdateRoleStatusReq req) {
-		executeTemplate.execute(log, PmsEnum.ROLE_UPDATE_STATUS, () -> pmsRoleManager.updateRoleStatus(req));
+		webExecuteTemplate.execute(PmsEnum.ROLE_UPDATE_STATUS, () -> pmsRoleManager.updateRoleStatus(req));
 		return ResultHelper.success();
 	}
 
@@ -112,7 +108,7 @@ public class PmsRoleController {
 	 */
 	@GetMapping
 	public ResultHelper<List<RoleInfo>> findAll() {
-		List<RoleInfo> res = executeTemplate.execute(log, PmsEnum.ROLE_FIND_ALL, pmsRoleManager::findAll);
+		List<RoleInfo> res = webExecuteTemplate.execute(PmsEnum.ROLE_FIND_ALL, pmsRoleManager::findAll);
 		return ResultHelper.of(res);
 	}
 
@@ -124,7 +120,7 @@ public class PmsRoleController {
 	 */
 	@PostMapping("/page")
 	public ResultHelper<PageRes<RolePageInfo>> page(@RequestBody RolePageReq req) {
-		PageRes<RolePageInfo> res = executeTemplate.execute(log, PmsEnum.ROLE_PAGE, () -> pmsRoleManager.queryPage(req));
+		PageRes<RolePageInfo> res = webExecuteTemplate.execute(PmsEnum.ROLE_PAGE, () -> pmsRoleManager.queryPage(req));
 		return ResultHelper.of(res);
 	}
 
@@ -136,7 +132,7 @@ public class PmsRoleController {
 	 */
 	@GetMapping("/permissions")
 	public ResultHelper<List<PermissionInfo>> findRolePermissions(Long id) {
-		List<PermissionInfo> res = executeTemplate.execute(log, PmsEnum.ROLE_FIND_ROLE_PERMISSIONS, () -> pmsRoleManager.findRolePermissions(id));
+		List<PermissionInfo> res = webExecuteTemplate.execute(PmsEnum.ROLE_FIND_ROLE_PERMISSIONS, () -> pmsRoleManager.findRolePermissions(id));
 		return ResultHelper.of(res);
 	}
 
@@ -148,7 +144,7 @@ public class PmsRoleController {
 	 */
 	@PostMapping("/permissions/add")
 	public ResultHelper<Boolean> addRolePermissions(@RequestBody AddRolePermissionsReq req) {
-		executeTemplate.execute(log, PmsEnum.ROLE_ADD_ROLE_PERMISSIONS, () -> pmsRoleManager.addRolePermissions(req));
+		webExecuteTemplate.execute(PmsEnum.ROLE_ADD_ROLE_PERMISSIONS, () -> pmsRoleManager.addRolePermissions(req));
 		return ResultHelper.success();
 	}
 
@@ -159,7 +155,7 @@ public class PmsRoleController {
 	 */
 	@GetMapping("/permissions/tree")
 	public ResultHelper<List<Tree<Long>>> permissionTree() {
-		List<Tree<Long>> res = executeTemplate.execute(log, PmsEnum.ROLE_PERMISSION_TREE, pmsRoleManager::findRolePermissionsTree);
+		List<Tree<Long>> res = webExecuteTemplate.execute(PmsEnum.ROLE_PERMISSION_TREE, pmsRoleManager::findRolePermissionsTree);
 		return ResultHelper.of(res);
 	}
 
@@ -171,7 +167,7 @@ public class PmsRoleController {
 	 */
 	@PatchMapping("/users/add")
 	public ResultHelper<Boolean> addRoleUsers(@RequestBody AddRoleUsersReq req) {
-		executeTemplate.execute(log, PmsEnum.ROLE_ADD_ROLE_USERS, () -> pmsRoleManager.addRoleUsers(req));
+		webExecuteTemplate.execute(PmsEnum.ROLE_ADD_ROLE_USERS, () -> pmsRoleManager.addRoleUsers(req));
 		return ResultHelper.success();
 	}
 
@@ -181,7 +177,7 @@ public class PmsRoleController {
 	 */
 	@PatchMapping("/users/remove")
 	public ResultHelper<Boolean> removeRoleUsers(@RequestBody RemoveRoleUsersReq req) {
-		executeTemplate.execute(log, PmsEnum.ROLE_REMOVE_ROLE_USERS, () -> pmsRoleManager.removeRoleUsers(req));
+		webExecuteTemplate.execute(PmsEnum.ROLE_REMOVE_ROLE_USERS, () -> pmsRoleManager.removeRoleUsers(req));
 		return ResultHelper.success();
 	}
 

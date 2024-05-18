@@ -13,11 +13,9 @@ import com.luman.pms.client.pms.model.req.ChangePasswordReq;
 import com.luman.pms.client.pms.model.req.LoginReq;
 import com.luman.pms.client.pms.model.req.RegisterUserReq;
 import com.luman.pms.client.pms.model.res.LoginTokenRes;
-import com.luman.smy.common.constant.LoggerConstant;
 import com.luman.smy.common.helper.ResultHelper;
 import com.luman.smy.common.template.ExecuteTemplate;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 @RestController
 @RequiredArgsConstructor
-@Slf4j(topic = LoggerConstant.WEB_MONITOR_LOGGER)
 public class PmsAuthController {
 
 	/**
@@ -45,7 +42,7 @@ public class PmsAuthController {
 	/**
 	 * 网页模板
 	 */
-	private final ExecuteTemplate executeTemplate;
+	private final ExecuteTemplate webExecuteTemplate;
 
 	/**
 	 * 登录
@@ -56,7 +53,7 @@ public class PmsAuthController {
 	@PostMapping("/login")
 	@SaIgnore
 	public ResultHelper<LoginTokenRes> login(@RequestBody LoginReq req) {
-		LoginTokenRes res = executeTemplate.execute(log, PmsEnum.AUTH_LOGIN, () -> pmsAuthMapper.login(req));
+		LoginTokenRes res = webExecuteTemplate.execute( PmsEnum.AUTH_LOGIN, () -> pmsAuthMapper.login(req));
 		return ResultHelper.of(res);
 	}
 
@@ -68,7 +65,7 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/register")
 	public ResultHelper<Boolean> register(@RequestBody RegisterUserReq req) {
-		executeTemplate.execute(log, PmsEnum.AUTH_REGISTER, () -> pmsUserManager.register(req));
+		webExecuteTemplate.execute( PmsEnum.AUTH_REGISTER, () -> pmsUserManager.register(req));
 		return ResultHelper.success();
 	}
 
@@ -79,7 +76,7 @@ public class PmsAuthController {
 	 */
 	@GetMapping("/refresh/token")
 	public ResultHelper<LoginTokenRes> refreshToken() {
-		LoginTokenRes res = executeTemplate.execute(log, PmsEnum.AUTH_REFRESH_TOKEN, pmsAuthMapper::refreshToken);
+		LoginTokenRes res = webExecuteTemplate.execute( PmsEnum.AUTH_REFRESH_TOKEN, pmsAuthMapper::refreshToken);
 		return ResultHelper.of(res);
 	}
 
@@ -91,7 +88,7 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/current-role/switch/{roleCode}")
 	public ResultHelper<LoginTokenRes> switchRole(@PathVariable String roleCode) {
-		LoginTokenRes res = executeTemplate.execute(log, PmsEnum.AUTH_SWITCH_ROLE, () -> pmsAuthMapper.switchRole(roleCode));
+		LoginTokenRes res = webExecuteTemplate.execute( PmsEnum.AUTH_SWITCH_ROLE, () -> pmsAuthMapper.switchRole(roleCode));
 		return ResultHelper.of(res);
 	}
 
@@ -102,7 +99,7 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/logout")
 	public ResultHelper<Boolean> logout() {
-		executeTemplate.execute(log, PmsEnum.AUTH_LOGOUT, pmsAuthMapper::logout);
+		webExecuteTemplate.execute( PmsEnum.AUTH_LOGOUT, pmsAuthMapper::logout);
 		return ResultHelper.success();
 	}
 
@@ -114,7 +111,7 @@ public class PmsAuthController {
 	@GetMapping("/captcha")
 	@SaIgnore
 	public ResultHelper<Boolean> captcha() {
-		executeTemplate.execute(log, PmsEnum.AUTH_CAPTCHA, pmsAuthMapper::captcha);
+		webExecuteTemplate.execute( PmsEnum.AUTH_CAPTCHA, pmsAuthMapper::captcha);
 		return ResultHelper.success();
 	}
 
@@ -126,7 +123,7 @@ public class PmsAuthController {
 	 */
 	@PostMapping("/password")
 	public ResultHelper<Boolean> changePassword(@RequestBody ChangePasswordReq req) {
-		executeTemplate.execute(log, PmsEnum.AUTH_CHANGE_PASSWORD, () -> pmsAuthMapper.changePassword(req));
+		webExecuteTemplate.execute( PmsEnum.AUTH_CHANGE_PASSWORD, () -> pmsAuthMapper.changePassword(req));
 		return ResultHelper.success();
 	}
 
