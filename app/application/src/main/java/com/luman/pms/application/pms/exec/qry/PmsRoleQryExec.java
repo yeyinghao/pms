@@ -41,22 +41,22 @@ public class PmsRoleQryExec {
 	/**
 	 * Pms角色数据服务
 	 */
-	private final PmsRoleGateway pmsRoleDataService;
+	private final PmsRoleGateway pmsRoleGateway;
 
 	/**
 	 * Pms用户角色数据服务
 	 */
-	private final PmsUserRoleGateway pmsUserRoleDataService;
+	private final PmsUserRoleGateway pmsUserRoleGateway;
 
 	/**
 	 * Pms角色许可数据服务
 	 */
-	private final PmsRolePermissionGateway pmsRolePermissionDataService;
+	private final PmsRolePermissionGateway pmsRolePermissionGateway;
 
 	/**
 	 * Pms许可数据服务
 	 */
-	private final PmsPermissionGateway pmsPermissionDataService;
+	private final PmsPermissionGateway pmsPermissionGateway;
 
 	/**
 	 * 获取角色信息由用户id
@@ -76,7 +76,7 @@ public class PmsRoleQryExec {
 	 * @return {@link List}<{@link PmsRole}>
 	 */
 	public List<PmsRole> getPmsRolesByUserId(Long userId) {
-		List<PmsUserRole> pmsUserRoles = pmsUserRoleDataService.findRolesByUserId(userId);
+		List<PmsUserRole> pmsUserRoles = pmsUserRoleGateway.findRolesByUserId(userId);
 		if (CollectionUtil.isEmpty(pmsUserRoles)) {
 			return Lists.newArrayList();
 		}
@@ -84,7 +84,7 @@ public class PmsRoleQryExec {
 		if (CollectionUtil.isEmpty(roleBizIds)) {
 			return Lists.newArrayList();
 		}
-		return pmsRoleDataService.findByRoleIds(roleBizIds);
+		return pmsRoleGateway.findByRoleIds(roleBizIds);
 	}
 
 	/**
@@ -93,7 +93,7 @@ public class PmsRoleQryExec {
 	 * @return {@link List}<{@link RoleInfo}>
 	 */
 	public List<RoleInfo> findAll() {
-		List<PmsRole> pmsRoles = pmsRoleDataService.findAll();
+		List<PmsRole> pmsRoles = pmsRoleGateway.findAll();
 		return RoleConvert.buildRoleInfos(pmsRoles);
 	}
 
@@ -104,9 +104,9 @@ public class PmsRoleQryExec {
 	 * @return {@link PageRes}<{@link RolePageInfo}>
 	 */
 	public PageRes<RolePageInfo> queryPage(RolePageReq req) {
-		PageRes<PmsRole> pmsRolePageResp = pmsRoleDataService.listByPage(req);
+		PageRes<PmsRole> pmsRolePageResp = pmsRoleGateway.listByPage(req);
 		return PageUtil.buildPage(pmsRolePageResp, RolePageInfo::new, (s, t) -> {
-			List<PmsRolePermission> permissions = pmsRolePermissionDataService.findByRoleId(s.getId());
+			List<PmsRolePermission> permissions = pmsRolePermissionGateway.findByRoleId(s.getId());
 			t.setPermissionIds(permissions.stream().map(PmsRolePermission::getPermissionId)
 					.collect(Collectors.toList()));
 		});
@@ -119,9 +119,9 @@ public class PmsRoleQryExec {
 	 * @return {@link List}<{@link PermissionInfo}>
 	 */
 	public List<PermissionInfo> findRolePermissions(Long id) {
-		List<PmsRolePermission> permissions = pmsRolePermissionDataService.findByRoleId(id);
+		List<PmsRolePermission> permissions = pmsRolePermissionGateway.findByRoleId(id);
 		List<Long> permissionIds = permissions.stream().map(PmsRolePermission::getPermissionId).collect(Collectors.toList());
-		List<PmsPermission> pmsPermissions = pmsPermissionDataService.findByIds(permissionIds);
+		List<PmsPermission> pmsPermissions = pmsPermissionGateway.findByIds(permissionIds);
 		return pmsPermissions.stream().map(item -> CopyUtil.copy(item, PermissionInfo::new))
 				.collect(Collectors.toList());
 	}
@@ -133,7 +133,7 @@ public class PmsRoleQryExec {
 	 * @return {@link RoleInfo}
 	 */
 	public RoleInfo findById(Long id) {
-		PmsRole pmsRole = pmsRoleDataService.findById(id);
+		PmsRole pmsRole = pmsRoleGateway.findById(id);
 		RoleInfo roleInfo = new RoleInfo();
 		roleInfo.setId(pmsRole.getId());
 		roleInfo.setCode(pmsRole.getCode());
@@ -147,14 +147,14 @@ public class PmsRoleQryExec {
 	 */
 	public List<Tree<Long>> findRolePermissionsTree() {
 		String roleCode = (String) StpUtil.getExtra(SaTokenConstant.JWT_CURRENT_ROLE_KEY);
-		PmsRole pmsRole = pmsRoleDataService.findByCode(roleCode);
+		PmsRole pmsRole = pmsRoleGateway.findByCode(roleCode);
 		List<PmsPermission> permissions;
 		if ("SUPER_ADMIN".equals(roleCode)) {
-			permissions = pmsPermissionDataService.findAll();
+			permissions = pmsPermissionGateway.findAll();
 		} else {
-			List<PmsRolePermission> rolePermissions = pmsRolePermissionDataService.findByRoleId(pmsRole.getRoleId());
+			List<PmsRolePermission> rolePermissions = pmsRolePermissionGateway.findByRoleId(pmsRole.getRoleId());
 			List<Long> collect = rolePermissions.stream().map(PmsRolePermission::getPermissionId).collect(Collectors.toList());
-			permissions = pmsPermissionDataService.findByIds(collect);
+			permissions = pmsPermissionGateway.findByIds(collect);
 		}
 		return PermissionConvert.buildTreeNode(permissions, null);
 	}

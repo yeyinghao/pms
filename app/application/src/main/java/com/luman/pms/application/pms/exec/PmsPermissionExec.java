@@ -24,7 +24,7 @@ public class PmsPermissionExec {
 	/**
 	 * Pms权限数据服务
 	 */
-	private final PmsPermissionGateway pmsPermissionDataService;
+	private final PmsPermissionGateway pmsPermissionGateway;
 
 	/**
 	 * 创建
@@ -35,7 +35,7 @@ public class PmsPermissionExec {
 	public Boolean create(CreatePermissionReq req) {
 		PmsPermission pmsPermission = CopyUtil.copy(req, PmsPermission::new);
 		pmsPermission.setPermissionId(IdUtil.getSnowflakeNextId());
-		pmsPermissionDataService.save(pmsPermission);
+		pmsPermissionGateway.save(pmsPermission);
 		return Boolean.TRUE;
 	}
 
@@ -46,7 +46,7 @@ public class PmsPermissionExec {
 	 */
 	public void createBatch(List<CreatePermissionReq> reqs) {
 		List<PmsPermission> pmsPermissions = CopyUtil.copyList(reqs, PmsPermission::new);
-		pmsPermissionDataService.saveBatch(pmsPermissions);
+		pmsPermissionGateway.saveBatch(pmsPermissions);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class PmsPermissionExec {
 	 */
 	public void updateById(UpdatePermissionReq req) {
 		PmsPermission pmsPermission = CopyUtil.copy(req, PmsPermission::new);
-		pmsPermissionDataService.updateById(pmsPermission);
+		pmsPermissionGateway.updateById(pmsPermission);
 	}
 
 	/**
@@ -65,6 +65,6 @@ public class PmsPermissionExec {
 	 * @param id id
 	 */
 	public void remove(Long id) {
-		pmsPermissionDataService.deleteById(id);
+		pmsPermissionGateway.deleteById(id);
 	}
 }

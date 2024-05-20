@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 public class UserConvert {
 
-	public static List<PmsUserRole> buildUserRoles(List<Long> roleIds, Long userId) {
-		return roleIds.stream().map(roleId -> {
+	public static List<PmsUserRole> buildUserRoles(List<Long> roleBizIds, Long userId) {
+		return roleBizIds.stream().map(roleBizId -> {
 			PmsUserRole userRole = new PmsUserRole();
 			userRole.setUserId(userId);
-			userRole.setRoleId(roleId);
+			userRole.setRoleId(roleBizId);
 			return userRole;
 		}).collect(Collectors.toList());
 	}

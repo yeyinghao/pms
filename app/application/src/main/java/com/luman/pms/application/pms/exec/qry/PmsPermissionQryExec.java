@@ -27,7 +27,7 @@ public class PmsPermissionQryExec {
 	/**
 	 * Pms权限数据服务
 	 */
-	private final PmsPermissionGateway pmsPermissionDataService;
+	private final PmsPermissionGateway pmsPermissionGateway;
 
 	/**
 	 * 查找所有菜单
@@ -35,7 +35,7 @@ public class PmsPermissionQryExec {
 	 * @return {@link List}<{@link PermissionInfo}>
 	 */
 	public List<PermissionInfo> findAllMenu() {
-		List<PmsPermission> all = pmsPermissionDataService.findAll();
+		List<PmsPermission> all = pmsPermissionGateway.findAll();
 		return CopyUtil.copyList(all, PermissionInfo::new);
 	}
 
@@ -45,7 +45,7 @@ public class PmsPermissionQryExec {
 	 * @return {@link List}<{@link Tree}<{@link Long}>>
 	 */
 	public List<Tree<Long>> findAllMenuTree() {
-		List<PmsPermission> all = pmsPermissionDataService.findAllMenu(PermissionTypeEnum.MENU);
+		List<PmsPermission> all = pmsPermissionGateway.findAllMenu(PermissionTypeEnum.MENU);
 		return PermissionConvert.buildTreeNode(all, null);
 	}
 
@@ -56,7 +56,7 @@ public class PmsPermissionQryExec {
 	 * @return {@link PermissionInfo}
 	 */
 	public PermissionInfo findById(Long id) {
-		PmsPermission permission = pmsPermissionDataService.findById(id);
+		PmsPermission permission = pmsPermissionGateway.findById(id);
 		return CopyUtil.copy(permission, PermissionInfo::new);
 	}
 
@@ -67,7 +67,7 @@ public class PmsPermissionQryExec {
 	 * @return {@link List}<{@link PermissionInfo}>
 	 */
 	public List<PermissionInfo> findButtonByParentId(Long parentId) {
-		List<PmsPermission> permissionList = pmsPermissionDataService.findButtonByParentId(parentId, PermissionTypeEnum.BUTTON);
+		List<PmsPermission> permissionList = pmsPermissionGateway.findButtonByParentId(parentId, PermissionTypeEnum.BUTTON);
 		return CopyUtil.copyList(permissionList, PermissionInfo::new);
 	}
 
@@ -77,7 +77,7 @@ public class PmsPermissionQryExec {
 	 * @param path 路径
 	 */
 	public void validateMenuPath(String path) {
-		Boolean isExists = pmsPermissionDataService.validateMenuPath(path);
+		Boolean isExists = pmsPermissionGateway.validateMenuPath(path);
 		Assert.isTrue(isExists, CommErrorEnum.BIZ_ERROR, "路径不合法");
 	}
 }

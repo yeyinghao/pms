@@ -33,12 +33,12 @@ public class PmsUserQryExec {
 	/**
 	 * Pms用户数据服务
 	 */
-	private final PmsUserGateway pmsUserDataService;
+	private final PmsUserGateway pmsUserGateway;
 
 	/**
 	 * Pmsprofile数据服务
 	 */
-	private final PmsProfileGateway pmsProfileDataService;
+	private final PmsProfileGateway pmsProfileGateway;
 
 	/**
 	 * Pms角色qry执行
@@ -55,7 +55,7 @@ public class PmsUserQryExec {
 		Long id = UserTokenUtil.getId();
 		String roleCode = (String) StpUtil.getExtra(SaTokenConstant.JWT_CURRENT_ROLE_KEY);
 
-		PmsUser pmsUser = pmsUserDataService.findById(id);
+		PmsUser pmsUser = pmsUserGateway.findById(id);
 
 		UserDetailInfo userDetailInfo = new UserDetailInfo();
 		userDetailInfo.setId(pmsUser.getId());
@@ -64,7 +64,7 @@ public class PmsUserQryExec {
 		userDetailInfo.setCreateTime(pmsUser.getCreateTime());
 		userDetailInfo.setUpdateTime(pmsUser.getUpdateTime());
 
-		PmsProfile pmsProfile = pmsProfileDataService.findByUserId(pmsUser.getUserId());
+		PmsProfile pmsProfile = pmsProfileGateway.findByUserId(pmsUser.getUserId());
 		ProfileInfo profileInfo = new ProfileInfo();
 		profileInfo.setGender(pmsProfile.getGender());
 		profileInfo.setAvatar(pmsProfile.getAvatar());
@@ -87,7 +87,7 @@ public class PmsUserQryExec {
 	 * @return {@link PageRes}<{@link UserPageInfo}>
 	 */
 	public PageRes<UserPageInfo> queryPage(UserPageReq req) {
-		PageRes<PmsUser> userPageResp = pmsUserDataService.listByPage(req);
+		PageRes<PmsUser> userPageResp = pmsUserGateway.listByPage(req);
 		List<PmsUser> dataList = userPageResp.getRecords();
 		PageRes<UserPageInfo> pageResp = new PageRes<>();
 		pageResp.setPageIndex(userPageResp.getPageIndex());
@@ -101,7 +101,7 @@ public class PmsUserQryExec {
 			userPageInfo.setEnable(item.getEnable());
 			userPageInfo.setCreateTime(item.getCreateTime());
 			userPageInfo.setUpdateTime(item.getUpdateTime());
-			PmsProfile pmsProfile = pmsProfileDataService.findByUserId(item.getUserId());
+			PmsProfile pmsProfile = pmsProfileGateway.findByUserId(item.getUserId());
 			userPageInfo.setGender(pmsProfile.getGender());
 			userPageInfo.setAvatar(pmsProfile.getAvatar());
 			userPageInfo.setAddress(pmsProfile.getAddress());

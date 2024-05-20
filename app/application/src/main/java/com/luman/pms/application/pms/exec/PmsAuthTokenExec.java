@@ -34,7 +34,7 @@ public class PmsAuthTokenExec {
 	/**
 	 * PMS用户服务
 	 */
-	private final PmsUserGateway pmsUserDataService;
+	private final PmsUserGateway pmsUserGateway;
 
 	/**
 	 * PMS用户角色服务
@@ -58,7 +58,7 @@ public class PmsAuthTokenExec {
 		if (captchaKey != null) {
 			req.setCaptchaKey(captchaKey);
 		}
-		PmsUser pmsUser = pmsUserDataService.findByName(req.getUserName());
+		PmsUser pmsUser = pmsUserGateway.findByName(req.getUserName());
 		Assert.notNull(pmsUser, CommErrorEnum.BIZ_ERROR, "用户信息不存在");
 
 //        if (StrUtil.isBlank(req.getCaptchaKey()) || !captchaService.verify(req.getCaptchaKey(), req.getCaptcha())) {
@@ -99,7 +99,7 @@ public class PmsAuthTokenExec {
 	 */
 	public LoginTokenRes switchRole(String roleCode) {
 		Long id = UserTokenUtil.getId();
-		PmsUser pmsUser = pmsUserDataService.findById(id);
+		PmsUser pmsUser = pmsUserGateway.findById(id);
 		// 查询用户的角色
 		List<PmsRole> roles = pmsRoleQryExec.getPmsRolesByUserId(pmsUser.getUserId());
 		PmsRole currentRole = null;

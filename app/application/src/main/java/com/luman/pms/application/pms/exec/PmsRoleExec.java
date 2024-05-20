@@ -32,17 +32,17 @@ public class PmsRoleExec {
 	/**
 	 * Pms角色数据服务
 	 */
-	private final PmsRoleGateway pmsRoleDataService;
+	private final PmsRoleGateway pmsRoleGateway;
 
 	/**
 	 * Pms用户角色数据服务
 	 */
-	private final PmsUserRoleGateway pmsUserRoleDataService;
+	private final PmsUserRoleGateway pmsUserRoleGateway;
 
 	/**
 	 * Pms角色许可数据服务
 	 */
-	private final PmsRolePermissionGateway pmsRolePermissionDataService;
+	private final PmsRolePermissionGateway pmsRolePermissionGateway;
 
 	private final PmsTrans pmsTrans;
 
@@ -52,7 +52,7 @@ public class PmsRoleExec {
 	 * @param req 请求
 	 */
 	public void createRole(CreateRoleReq req) {
-		PmsRole pmsRole = pmsRoleDataService.findByCodeOrName(req.getCode(), req.getName());
+		PmsRole pmsRole = pmsRoleGateway.findByCodeOrName(req.getCode(), req.getName());
 		Assert.isNull(pmsRole, CommErrorEnum.BIZ_ERROR, "角色已存在");
 		pmsRole = new PmsRole();
 		pmsRole.setRoleId(IdUtil.getSnowflakeNextId());
@@ -70,13 +70,13 @@ public class PmsRoleExec {
 	 * @param req 请求
 	 */
 	public void addRolePermissions(AddRolePermissionsReq req) {
-		PmsRole pmsRole = pmsRoleDataService.findById(req.getId());
-		List<PmsRolePermission> rolePermissions = pmsRolePermissionDataService.findByRoleId(pmsRole.getRoleId());
+		PmsRole pmsRole = pmsRoleGateway.findById(req.getId());
+		List<PmsRolePermission> rolePermissions = pmsRolePermissionGateway.findByRoleId(pmsRole.getRoleId());
 		List<Long> list = rolePermissions.stream().map(PmsRolePermission::getPermissionId).collect(Collectors.toList());
 		CollUtil.removeWithAddIf(req.getPermissionIds(), list::contains);
 
 		List<PmsRolePermission> pmsRolePermissions = RoleConvert.buildRolePermissions(pmsRole.getRoleId(), req.getPermissionIds());
-		pmsRolePermissionDataService.saveBatch(pmsRolePermissions);
+		pmsRolePermissionGateway.saveBatch(pmsRolePermissions);
 	}
 
 	/**
@@ -85,8 +85,8 @@ public class PmsRoleExec {
 	 * @param req 请求
 	 */
 	public void addRoleUsers(AddRoleUsersReq req) {
-		PmsRole pmsRole = pmsRoleDataService.findById(req.getId());
-		List<Long> list = pmsUserRoleDataService.findByRoleId(pmsRole.getId()).stream().map(PmsUserRole::getUserId).collect(Collectors.toList());
+		PmsRole pmsRole = pmsRoleGateway.findById(req.getId());
+		List<Long> list = pmsUserRoleGateway.findByRoleId(pmsRole.getId()).stream().map(PmsUserRole::getUserId).collect(Collectors.toList());
 		CollUtil.removeWithAddIf(req.getUserIds(), list::contains);
 		List<PmsUserRole> permissionList = req.getUserIds().stream().map(userId -> {
 			PmsUserRole userRole = new PmsUserRole();
@@ -94,7 +94,7 @@ public class PmsRoleExec {
 			userRole.setUserId(userId);
 			return userRole;
 		}).collect(Collectors.toList());
-		pmsUserRoleDataService.saveBatch(permissionList);
+		pmsUserRoleGateway.saveBatch(permissionList);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class PmsRoleExec {
 	 * @param id id
 	 */
 	public void removeRole(Long id) {
-		PmsRole pmsRole = pmsRoleDataService.findById(id);
+		PmsRole pmsRole = pmsRoleGateway.findById(id);
 		pmsTrans.removeRoleByTrans(pmsRole);
 	}
 
@@ -113,8 +113,8 @@ public class PmsRoleExec {
 	 * @param req 请求
 	 */
 	public void removeRoleUsers(RemoveRoleUsersReq req) {
-		PmsRole pmsRole = pmsRoleDataService.findById(req.getId());
-		pmsUserRoleDataService.removeRoleIdAndUserIds(pmsRole.getRoleId(), req.getUserIds());
+		PmsRole pmsRole = pmsRoleGateway.findById(req.getId());
+		pmsUserRoleGateway.removeRoleIdAndUserIds(pmsRole.getRoleId(), req.getUserIds());
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class PmsRoleExec {
 	 * @param req 请求
 	 */
 	public void updateRole(UpdateRoleReq req) {
-		PmsRole pmsRole = pmsRoleDataService.findById(req.getId());
+		PmsRole pmsRole = pmsRoleGateway.findById(req.getId());
 		pmsRole.setCode(req.getCode());
 		pmsRole.setName(req.getName());
 		pmsRole.setEnable(req.getEnable());
@@ -137,8 +137,8 @@ public class PmsRoleExec {
 	 * @param req 请求
 	 */
 	public void updateRoleStatus(UpdateRoleStatusReq req) {
-		PmsRole pmsRole = pmsRoleDataService.findById(req.getId());
+		PmsRole pmsRole = pmsRoleGateway.findById(req.getId());
 		pmsRole.setEnable(req.getEnable());
-		pmsRoleDataService.updateById(pmsRole);
+		pmsRoleGateway.updateById(pmsRole);
 	}
 }
