@@ -68,7 +68,7 @@ public class PmsAuthTokenExec {
 		Assert.isTrue(StrUtil.equals(req.getPassword(), pmsUser.getPassword()), CommErrorEnum.BIZ_ERROR, "密码不正确");
 
 		// 查询用户的角色
-		List<PmsRole> roles = pmsRoleQryExec.getPmsRolesByUserId(pmsUser.getUserId());
+		List<PmsRole> roles = pmsRoleQryExec.getPmsRolesByUserId(pmsUser.getBizId());
 		return generateToken(pmsUser, roles, roles.isEmpty() ? "" : roles.get(0).getCode());
 	}
 
@@ -101,7 +101,7 @@ public class PmsAuthTokenExec {
 		Long id = UserTokenUtil.getId();
 		PmsUser pmsUser = pmsUserGateway.findById(id);
 		// 查询用户的角色
-		List<PmsRole> roles = pmsRoleQryExec.getPmsRolesByUserId(pmsUser.getUserId());
+		List<PmsRole> roles = pmsRoleQryExec.getPmsRolesByUserId(pmsUser.getBizId());
 		PmsRole currentRole = null;
 		for (PmsRole role : roles) {
 			if (roleCode.equals(role.getCode())) {
@@ -124,7 +124,7 @@ public class PmsAuthTokenExec {
 		// 密码验证成功
 		StpUtil.login(user.getId(), SaLoginConfig.setExtra(SaTokenConstant.JWT_ID_KEY, user.getId())
 				.setExtra(SaTokenConstant.JWT_USERNAME_KEY, user.getUserName())
-				.setExtra(SaTokenConstant.JWT_USER_ID_KEY, user.getUserId())
+				.setExtra(SaTokenConstant.JWT_USER_ID_KEY, user.getBizId())
 				.setExtra(SaTokenConstant.JWT_CURRENT_ROLE_KEY, currentRoleCode)
 				.setExtra(SaTokenConstant.JWT_USER_CODE_KEY, user.getUserCode())
 				.setExtra(SaTokenConstant.JWT_ROLE_LIST_KEY, roles));

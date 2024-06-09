@@ -64,7 +64,7 @@ public class PmsUserQryExec {
 		userDetailInfo.setCreateTime(pmsUser.getCreateTime());
 		userDetailInfo.setUpdateTime(pmsUser.getUpdateTime());
 
-		PmsProfile pmsProfile = pmsProfileGateway.findByUserId(pmsUser.getUserId());
+		PmsProfile pmsProfile = pmsProfileGateway.findByUserId(pmsUser.getBizId());
 		ProfileInfo profileInfo = new ProfileInfo();
 		profileInfo.setGender(pmsProfile.getGender());
 		profileInfo.setAvatar(pmsProfile.getAvatar());
@@ -74,7 +74,7 @@ public class PmsUserQryExec {
 		profileInfo.setNickName(pmsProfile.getNickName());
 		userDetailInfo.setProfile(profileInfo);
 
-		List<RoleInfo> roleInfos = pmsRoleQryExec.getRoleInfosByUserId(pmsUser.getUserId());
+		List<RoleInfo> roleInfos = pmsRoleQryExec.getRoleInfosByUserId(pmsUser.getBizId());
 		userDetailInfo.setCurrentRole(roleInfos.stream().filter(item -> item.getCode().equals(roleCode)).collect(Collectors.toList()).get(0));
 		userDetailInfo.setRoles(roleInfos);
 		return userDetailInfo;
@@ -101,13 +101,13 @@ public class PmsUserQryExec {
 			userPageInfo.setEnable(item.getEnable());
 			userPageInfo.setCreateTime(item.getCreateTime());
 			userPageInfo.setUpdateTime(item.getUpdateTime());
-			PmsProfile pmsProfile = pmsProfileGateway.findByUserId(item.getUserId());
+			PmsProfile pmsProfile = pmsProfileGateway.findByUserId(item.getBizId());
 			userPageInfo.setGender(pmsProfile.getGender());
 			userPageInfo.setAvatar(pmsProfile.getAvatar());
 			userPageInfo.setAddress(pmsProfile.getAddress());
 			userPageInfo.setEmail(pmsProfile.getEmail());
 			// 查询用户的角色
-			userPageInfo.setRoles(pmsRoleQryExec.getRoleInfosByUserId(item.getUserId()));
+			userPageInfo.setRoles(pmsRoleQryExec.getRoleInfosByUserId(item.getBizId()));
 			pageInfos.add(userPageInfo);
 		});
 		pageResp.setRecords(pageInfos);

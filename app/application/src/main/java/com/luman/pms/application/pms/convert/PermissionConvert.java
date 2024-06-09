@@ -21,7 +21,7 @@ public class PermissionConvert {
 	public static List<Tree<Long>> buildTreeNode(List<PmsPermission> permissions, Long parent) {
 		List<TreeNode<Long>> nodes = permissions.stream().map(permission -> {
 			TreeNode<Long> treeNode = new TreeNode<>();
-			treeNode.setId(permission.getPermissionId());
+			treeNode.setId(permission.getBizId());
 			treeNode.setParentId(permission.getParentId());
 			treeNode.setWeight(permission.getOrder());
 			treeNode.setName(permission.getName());

@@ -21,7 +21,7 @@ public class PmsRole extends BaseDP {
 	/**
 	 * 角色id
 	 */
-	private Long roleId;
+	private Long bizId;
 
 	/**
 	 * 编号

@@ -56,15 +56,15 @@ public class PmsUserExec {
 		// 存在报错
 		Assert.isNull(pmsUser, CommErrorEnum.BIZ_ERROR, "用户已存在");
 		pmsUser = new PmsUser();
-		pmsUser.setUserId(IdUtil.getSnowflakeNextId());
+		pmsUser.setBizId(IdUtil.getSnowflakeNextId());
 		pmsUser.setUserName(req.getUserName());
 		pmsUser.setPassword(req.getPassword());
 		pmsUser.setUserCode(getUserCode());
 		pmsUser.setEnable(Boolean.TRUE);
-		PmsProfile pmsProfile = UserConvert.buildProfile(req.getProfile(), pmsUser.getUserId());
+		PmsProfile pmsProfile = UserConvert.buildProfile(req.getProfile(), pmsUser.getBizId());
 		// 转化角色id为角色bizId
 		List<Long> roleBizIds = pmsBizIdQryExec.roleIds2RoleBizIds(req.getRoleIds());
-		List<PmsUserRole> userRoleList = UserConvert.buildUserRoles(roleBizIds, pmsUser.getUserId());
+		List<PmsUserRole> userRoleList = UserConvert.buildUserRoles(roleBizIds, pmsUser.getBizId());
 		pmsTrans.registerByTrans(pmsUser, pmsProfile, userRoleList);
 	}
 
@@ -93,7 +93,7 @@ public class PmsUserExec {
 		Assert.notNull(pmsUser, CommErrorEnum.BIZ_ERROR, "用户不存在");
 		// 转化角色id为角色bizId
 		List<Long> roleBizIds = pmsBizIdQryExec.roleIds2RoleBizIds(req.getRoleIds());
-		List<PmsUserRole> list = UserConvert.buildUserRoles(roleBizIds, pmsUser.getUserId());
+		List<PmsUserRole> list = UserConvert.buildUserRoles(roleBizIds, pmsUser.getBizId());
 		pmsTrans.addRolesByTrans(pmsUser, list);
 	}
 

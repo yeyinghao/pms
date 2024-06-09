@@ -19,7 +19,7 @@ public class PmsRolePO extends BasePO {
 	/**
 	 * 角色id
 	 */
-	private Long roleId;
+	private Long bizId;
 
 	/**
 	 * 编号

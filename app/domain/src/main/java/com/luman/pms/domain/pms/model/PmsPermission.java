@@ -21,7 +21,7 @@ public class PmsPermission extends BaseDP {
 	/**
 	 * 权限id
 	 */
-	private Long permissionId;
+	private Long bizId;
 
 	/**
 	 * 名称

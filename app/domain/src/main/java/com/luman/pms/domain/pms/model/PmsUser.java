@@ -21,7 +21,7 @@ public class PmsUser extends BaseDP {
 	/**
 	 * 用户id
 	 */
-	private Long userId;
+	private Long bizId;
 
 	/**
 	 * 名称

@@ -55,12 +55,12 @@ public class PmsRoleExec {
 		PmsRole pmsRole = pmsRoleGateway.findByCodeOrName(req.getCode(), req.getName());
 		Assert.isNull(pmsRole, CommErrorEnum.BIZ_ERROR, "角色已存在");
 		pmsRole = new PmsRole();
-		pmsRole.setRoleId(IdUtil.getSnowflakeNextId());
+		pmsRole.setBizId(IdUtil.getSnowflakeNextId());
 		pmsRole.setCode(req.getCode());
 		pmsRole.setName(req.getName());
 		pmsRole.setEnable(Boolean.TRUE);
 		pmsRole.setStatus(Boolean.TRUE);
-		List<PmsRolePermission> pmsRolePermissions = RoleConvert.buildRolePermissions(pmsRole.getRoleId(), req.getPermissionIds());
+		List<PmsRolePermission> pmsRolePermissions = RoleConvert.buildRolePermissions(pmsRole.getBizId(), req.getPermissionIds());
 		pmsTrans.createRoleByTrans(pmsRole, pmsRolePermissions);
 	}
 
@@ -71,11 +71,11 @@ public class PmsRoleExec {
 	 */
 	public void addRolePermissions(AddRolePermissionsReq req) {
 		PmsRole pmsRole = pmsRoleGateway.findById(req.getId());
-		List<PmsRolePermission> rolePermissions = pmsRolePermissionGateway.findByRoleId(pmsRole.getRoleId());
+		List<PmsRolePermission> rolePermissions = pmsRolePermissionGateway.findByRoleId(pmsRole.getBizId());
 		List<Long> list = rolePermissions.stream().map(PmsRolePermission::getPermissionId).collect(Collectors.toList());
 		CollUtil.removeWithAddIf(req.getPermissionIds(), list::contains);
 
-		List<PmsRolePermission> pmsRolePermissions = RoleConvert.buildRolePermissions(pmsRole.getRoleId(), req.getPermissionIds());
+		List<PmsRolePermission> pmsRolePermissions = RoleConvert.buildRolePermissions(pmsRole.getBizId(), req.getPermissionIds());
 		pmsRolePermissionGateway.saveBatch(pmsRolePermissions);
 	}
 
@@ -114,7 +114,7 @@ public class PmsRoleExec {
 	 */
 	public void removeRoleUsers(RemoveRoleUsersReq req) {
 		PmsRole pmsRole = pmsRoleGateway.findById(req.getId());
-		pmsUserRoleGateway.removeRoleIdAndUserIds(pmsRole.getRoleId(), req.getUserIds());
+		pmsUserRoleGateway.removeRoleIdAndUserIds(pmsRole.getBizId(), req.getUserIds());
 	}
 
 	/**

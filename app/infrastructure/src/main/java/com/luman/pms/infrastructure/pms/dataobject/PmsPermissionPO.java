@@ -20,7 +20,7 @@ public class PmsPermissionPO extends BasePO {
 	/**
 	 * 权限id
 	 */
-	private Long permissionId;
+	private Long bizId;
 
 	/**
 	 * 名称

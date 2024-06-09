@@ -45,7 +45,7 @@ public class PmsTrans {
 	 */
 	@Transactional(rollbackFor = Throwable.class)
 	public void addRolesByTrans(PmsUser pmsUser, List<PmsUserRole> list) {
-		pmsUserRoleGateway.removeByUserId(pmsUser.getUserId());
+		pmsUserRoleGateway.removeByUserId(pmsUser.getBizId());
 		pmsUserRoleGateway.saveBatch(list);
 	}
 
@@ -69,8 +69,8 @@ public class PmsTrans {
 	@Transactional(rollbackFor = Throwable.class)
 	public void removeRoleByTrans(PmsRole pmsRole) {
 		pmsRoleGateway.deleteById(pmsRole.getId());
-		pmsRolePermissionGateway.removeByRoleId(pmsRole.getRoleId());
-		pmsUserRoleGateway.removeByRoleId(pmsRole.getRoleId());
+		pmsRolePermissionGateway.removeByRoleId(pmsRole.getBizId());
+		pmsUserRoleGateway.removeByRoleId(pmsRole.getBizId());
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class PmsTrans {
 	@Transactional(rollbackFor = Throwable.class)
 	public void updateRoleByTrans(PmsRole pmsRole, List<PmsRolePermission> pmsRolePermissions) {
 		pmsRoleGateway.updateById(pmsRole);
-		pmsRolePermissionGateway.removeByRoleId(pmsRole.getRoleId());
+		pmsRolePermissionGateway.removeByRoleId(pmsRole.getBizId());
 		pmsRolePermissionGateway.saveBatch(pmsRolePermissions);
 	}
 

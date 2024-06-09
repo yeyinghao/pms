@@ -152,7 +152,7 @@ public class PmsRoleQryExec {
 		if ("SUPER_ADMIN".equals(roleCode)) {
 			permissions = pmsPermissionGateway.findAll();
 		} else {
-			List<PmsRolePermission> rolePermissions = pmsRolePermissionGateway.findByRoleId(pmsRole.getRoleId());
+			List<PmsRolePermission> rolePermissions = pmsRolePermissionGateway.findByRoleId(pmsRole.getBizId());
 			List<Long> collect = rolePermissions.stream().map(PmsRolePermission::getPermissionId).collect(Collectors.toList());
 			permissions = pmsPermissionGateway.findByIds(collect);
 		}

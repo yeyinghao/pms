@@ -45,6 +45,6 @@ public class PmsRoleGatewayImpl extends GatewayImpl<PmsRolePO, PmsRole, PmsRoleM
 
 	@Override
 	public List<PmsRole> findByRoleIds(List<Long> roleBizIds) {
-		return convertToDOs(lambdaQuery().in(PmsRolePO::getRoleId, roleBizIds).list());
+		return convertToDOs(lambdaQuery().in(PmsRolePO::getBizId, roleBizIds).list());
 	}
 }

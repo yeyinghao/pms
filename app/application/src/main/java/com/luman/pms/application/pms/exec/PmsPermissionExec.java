@@ -34,7 +34,7 @@ public class PmsPermissionExec {
 	 */
 	public Boolean create(CreatePermissionReq req) {
 		PmsPermission pmsPermission = CopyUtil.copy(req, PmsPermission::new);
-		pmsPermission.setPermissionId(IdUtil.getSnowflakeNextId());
+		pmsPermission.setBizId(IdUtil.getSnowflakeNextId());
 		pmsPermissionGateway.save(pmsPermission);
 		return Boolean.TRUE;
 	}
