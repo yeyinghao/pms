@@ -35,7 +35,7 @@ public class PmsBizIdQryExec {
 	public List<Long> roleIds2RoleBizIds(List<Long> roleIds) {
 		List<PmsRole> roles = pmsRoleGateway.findByIds(roleIds);
 		Assert.notEmpty(roles, CommErrorEnum.BIZ_ERROR, "角色查询失败");
-		Assert.isFalse(roles.size() == roleIds.size(), CommErrorEnum.BIZ_ERROR, "角色查询数量不匹配");
+		Assert.isTrue(roles.size() == roleIds.size(), CommErrorEnum.BIZ_ERROR, "角色查询数量不匹配");
 		return roles.stream().map(PmsRole::getBizId).collect(Collectors.toList());
 	}
 
@@ -48,7 +48,7 @@ public class PmsBizIdQryExec {
 	public List<Long> permissionIds2PermissionBizIds(List<Long> roleIds) {
 		List<PmsPermission> roles = pmsPermissionGateway.findByIds(roleIds);
 		Assert.notEmpty(roles, CommErrorEnum.BIZ_ERROR, "权限查询失败");
-		Assert.isFalse(roles.size() == roleIds.size(), CommErrorEnum.BIZ_ERROR, "权限查询数量不匹配");
+		Assert.isTrue(roles.size() == roleIds.size(), CommErrorEnum.BIZ_ERROR, "权限查询数量不匹配");
 		return roles.stream().map(PmsPermission::getBizId).collect(Collectors.toList());
 	}
 
